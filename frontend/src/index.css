@@ -1,0 +1,163 @@
+/* google font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
+
+/* layout */
+:root {
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+body {
+  background: #f1f1f1;
+  margin: 0;
+  font-family: "Poppins";
+}
+header {
+  background: #fff;
+}
+header .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header a {
+  color: #333;
+  text-decoration: none;
+}
+
+/* navbar */
+nav {
+  display: flex;
+  align-items: center;
+}
+nav a {
+  margin-left: 10px;
+}
+/* auth forms */
+form.signup,
+form.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+nav button {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: "Poppins";
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+}
+
+.category {
+  position: relative;
+  margin: 1rem;
+}
+
+.category-image {
+  width: 100%;
+  height: 200px;
+  max-width: cover;
+  object-fit: cover;
+}
+
+.categoryTitle {
+  bottom: 20px;
+  left: 10px;
+  font-size: 24px;
+}
+
+/* Organization cards */
+
+.organization-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.organization-card:hover {
+  transform: translateY(-5px);
+}
+
+.organization-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.organization-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.organization-description {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.organization-category {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.organization-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.organization-buttons button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  background-color: #3f51b5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.organization-buttons button:hover {
+  background-color: #303f9f;
+}
+
+.additional-links {
+  margin-top: 10px;
+}
+
+.additional-links a {
+  display: block;
+  margin-bottom: 5px;
+  color: #3f51b5;
+  text-decoration: none;
+}
+
+.additional-links a:hover {
+  text-decoration: underline;
+}
