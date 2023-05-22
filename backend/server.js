@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/organizations", organizationRoutes);
-app.use("/api/user", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/biotopes", biotopesRoutes);
 app.use("/api/events", eventRoutes);
 

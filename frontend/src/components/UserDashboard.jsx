@@ -9,12 +9,32 @@ const UserDashboard = ({ userId }) => {
   useEffect(() => {
     // Fetch liked organizations and interested events for the user
     const fetchUserDetails = async () => {
-      // Replace this with an API call to your backend
-      const userOrganizations = await getUserLikedOrganizations(userId);
-      const userEvents = await getUserInterestedEvents(userId);
+      try {
+        const userResponse = await fetch(`/api/users/${userId}`);
+        const userData = await userResponse.json();
 
-      setLikedOrganizations(userOrganizations);
-      setInterestedEvents(userEvents);
+        if (!userResponse.ok) {
+          throw new Error('Failed to fetch user details');
+        }
+
+        const user = userData.user;
+
+        // Make additional API calls or function invocations to retrieve the liked organizations and interested events
+        const orgResponse = await fetch(`/api/users/${user.id}/likedOrganizations`);
+        const eventResponse = await fetch(`/api/users/${user.id}/interestedEvents`);
+
+        if (!orgResponse.ok || !eventResponse.ok) {
+          throw new Error('Failed to fetch user details');
+        }
+
+        const orgData = await orgResponse.json();
+        const eventData = await eventResponse.json();
+
+        setLikedOrganizations(orgData.organizations);
+        setInterestedEvents(eventData.events);
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
     };
 
     fetchUserDetails();
@@ -25,13 +45,13 @@ const UserDashboard = ({ userId }) => {
       <h2>Liked Organizations</h2>
       <div className="user-organizations">
         {likedOrganizations.map(org => (
-          <OrganizationList key={org._id} organizations={likedOrganizations} category={org.category} />
+          <OrganizationList key={org._id} organization={org} />
         ))}
       </div>
       <h2>Interested Events</h2>
       <div className="user-events">
         {interestedEvents.map(event => (
-          <EventList key={event._id} events={interestedEvents} category={event.category} />
+          <EventList key={event._id} event={event} />
         ))}
       </div>
     </div>

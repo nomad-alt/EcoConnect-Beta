@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Organizations from './components/Organizations';
 import Events from './components/Events';
@@ -8,26 +8,18 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthContextProvider } from './context/AuthContext';
 
-const AuthRoutes = ({ isAuthenticated, element: Element, ...props }) => {
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return <Element {...props} />;
+const AuthRoutes = ({ Component, ...props }) => {
+  const isAuthenticated = true; // Replace with your actual authentication logic
+  return isAuthenticated ? <Component {...props} /> : <Navigate to="/login" replace />;
 };
 
-const App = () => {
-  const isAuthenticated = true; // Replace with your actual authentication logic
-
+function App() {
   return (
     <Router>
       <AuthContextProvider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/dashboard"
-            element={<AuthRoutes isAuthenticated={isAuthenticated} element={<UserDashboard />} />}
-          />
+          <Route path="/dashboard" element={<AuthRoutes Component={UserDashboard} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/organizations" element={<Organizations />} />
