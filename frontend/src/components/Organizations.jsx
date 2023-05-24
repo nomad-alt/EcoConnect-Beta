@@ -51,7 +51,7 @@ const Organizations = () => {
       <h1>Organizations</h1>
       <p>Explore various climate organizations.</p>
 
-      <OrganizationList organizations={organizations} category={category} getImageUrl={getImageUrl} />
+      <OrganizationList organizations={organizations} category={categoryFilter} getImageUrl={getImageUrl} />
     </div>
   );
 };

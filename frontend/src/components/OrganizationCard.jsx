@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const OrganizationCard = ({ organization, user, onLike }) => {
+const OrganizationCard = ({ organization, user, onLike, imageUrl }) => {
   console.log("User in OrganizationCard: ", user);
-  const { id, name, description, category, website, donateLink, additionalLinks, imageUrl } = organization;
+  console.log(organization, imageUrl, user);
+
+  const { id, name, description, category, website, donateLink, additionalLinks } = organization;
   const [liked, setLiked] = useState(false);
 
   const handleLike = async () => {

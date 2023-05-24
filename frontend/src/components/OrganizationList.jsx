@@ -1,10 +1,21 @@
 import React, { useContext } from 'react';
 import OrganizationCard from './OrganizationCard';
 import { AuthContext } from '../context/AuthContext';
+import PropTypes from 'prop-types';
 
 const OrganizationList = ({ organizations, category }) => {
+  if (!category) {
+    console.error("Category is not defined in OrganizationList component");
+    return null;  // or return a loading state, an error message, etc.
+  }
   const { user } = useContext(AuthContext);
   console.log("User in OrganizationList: ", user);
+  console.log(organizations);
+
+  OrganizationList.propTypes = {
+    organizations: PropTypes.array.isRequired,
+    category: PropTypes.string,
+  };
 
   const getImageUrl = (category) => {
     switch (category) {
@@ -21,12 +32,14 @@ const OrganizationList = ({ organizations, category }) => {
     }
   };
 
-const filteredOrganizations = organizations
-    .filter(org => org.category === category)
-    .map(org => ({
-      ...org,
-      id: org._id // Assign the correct ID property from your organization object
-    }));
+  const filteredOrganizations = organizations
+  .filter(org => org.category && org.category.toLowerCase() === category.toLowerCase())
+  .map(org => ({
+    ...org,
+    id: org._id // Assign the correct ID property from your organization object
+  }));
+
+  console.log(filteredOrganizations);
 
   const handleLike = async (orgId) => {
   if (!user) {
