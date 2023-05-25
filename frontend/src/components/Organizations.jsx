@@ -7,6 +7,7 @@ import oceanImage from '../assets/Biotopes/Ocean.jpg';
 import forestImage from '../assets/Biotopes/Forest.jpg';
 import desertImage from '../assets/Biotopes/Desert.jpg';
 import jungleImage from '../assets/Biotopes/Jungle.jpg';
+import oceanHero from '../assets/Desktop Landing Hero/oceanHero.png'
 
 const Organizations = () => {
   const [organizations, setOrganizations] = useState([]);
@@ -50,7 +51,6 @@ const Organizations = () => {
       <Navbar />
       <h1>Organizations</h1>
       <p>Explore various climate organizations.</p>
-
       <OrganizationList organizations={organizations} category={category} getImageUrl={getImageUrl} />
     </div>
   );

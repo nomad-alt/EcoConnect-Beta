@@ -3,37 +3,37 @@ import React from 'react';
 const OrganizationCard = ({ organization }) => {
   const { name, description, category, website, donateLink, additionalLinks, imageUrl } = organization;
 
- const handleLike = async () => {
-  if (!user) {
-    history.push('/login');
-    return;
-  }
-
-  try {
-    const response = await fetch(
-      `/api/users/${user.id}/likedOrganizations/${organization.id}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
-
-    if (response.ok) {
-      // Update the state of your component to reflect that the organization has been liked
-      // This is just an example. Your actual state update logic might be different.
-      setLiked(true);
-    } else {
-      // Handle any non-200 HTTP status codes
-      console.error('An error occurred while liking the organization');
+  const handleLike = async () => {
+    if (!user) {
+      history.push('/login');
+      return;
     }
-  } catch (error) {
-    // Handle any errors that occur while sending the request
-    console.error('An error occurred while liking the organization', error);
-  }
-};
+
+    try {
+      const response = await fetch(
+        `/api/users/${user.id}/likedOrganizations/${organization.id}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Update the state of your component to reflect that the organization has been liked
+        // This is just an example. Your actual state update logic might be different.
+        setLiked(true);
+      } else {
+        // Handle any non-200 HTTP status codes
+        console.error('An error occurred while liking the organization');
+      }
+    } catch (error) {
+      // Handle any errors that occur while sending the request
+      console.error('An error occurred while liking the organization', error);
+    }
+  };
 
   const handleShare = () => {
     // the share functionality here
