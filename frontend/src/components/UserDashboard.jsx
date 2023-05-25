@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
-import OrganizationCard from './OrganizationCard';
+import DashboardCard from './DashboardCard';
 import Navbar from './Navbar';
 
 const UserDashboard = () => {
@@ -39,7 +39,6 @@ const fetchLikedOrganizations = async () => {
   }
 };
 
-
     fetchLikedOrganizations();
   }, [user]);
 
@@ -50,10 +49,9 @@ const fetchLikedOrganizations = async () => {
       <h2>Liked Organizations</h2>
       <div className="user-organizations">
         {likedOrganizations.map((org) => (
-          <OrganizationCard
+          <DashboardCard
           key={org._id}
           organization={org}
-          onLike={() => handleLike(org._id)}
           onUnlike={() => handleUnlike(org._id)}
           user={user}
           liked={likedOrganizations.some(o => o._id === org._id)}

@@ -5,7 +5,7 @@ const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) =>
   console.log('User in OrganizationCard: ', user);
   console.log(organization, imageUrl, user);
 
-  const { id, name, description, category, website, donateLink, additionalLinks } = organization;
+  const { name, description, category, website, donateLink, additionalLinks } = organization;
   const [liked, setLiked] = useState(false);
 
 
@@ -14,7 +14,6 @@ const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) =>
       window.location.href = '/login';
       return;
     }
-    console.log("Org ID: ", organization.id);
     try {
       const response = await fetch(`/api/users/${user.id}/likedOrganizations/${organization.id}`, {
         method: 'POST',
