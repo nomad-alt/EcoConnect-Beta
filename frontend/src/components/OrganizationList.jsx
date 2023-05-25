@@ -25,10 +25,12 @@ const OrganizationList = ({ organizations, category, onLike }) => {
   }, [organizations]);
 
   const handleLike = async (orgId) => {
+    onsole.log(`Liked organization with id: ${orgId}`);
     onLike(orgId);
   };
 
   const handleUnlike = async (orgId) => {
+    console.log(`Unliked organization with id: ${orgId}`);
     onUnlike(orgId);
   };
 
