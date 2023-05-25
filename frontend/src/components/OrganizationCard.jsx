@@ -96,7 +96,7 @@ const OrganizationCard = ({ organization }) => {
         <LinkedinShareButton url={shareUrl} className="organization-share">
           Linkiden
         </LinkedinShareButton>
-
+          
         <TwitterShareButton
           url={shareUrl}
           title={name}
