@@ -1,57 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import OrganizationList from './OrganizationList';
-import EventList from './EventList';
+import React, { useState, useEffect, useContext } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import DashboardCard from './DashboardCard';
+import Navbar from './Navbar';
 
-const UserDashboard = ({ userId }) => {
+const UserDashboard = () => {
+  const { user } = useAuthContext();
   const [likedOrganizations, setLikedOrganizations] = useState([]);
-  const [interestedEvents, setInterestedEvents] = useState([]);
+  const handleUnlike = (orgId) => {
+    setLikedOrganizations(likedOrganizations.filter(org => org._id !== orgId));
+  };
+  const handleLike = (orgId) => {
+    setLikedOrganizations([...likedOrganizations, orgId]);
+};
+  
 
   useEffect(() => {
-    // Fetch liked organizations and interested events for the user
-    const fetchUserDetails = async () => {
-      try {
-        const userResponse = await fetch(`/api/users/${userId}`);
-        const userData = await userResponse.json();
+    // Fetch liked organizations from the API
+const fetchLikedOrganizations = async () => {
+  if (!user) return;
+  
+  try {
+    const response = await fetch(`/api/users/${user.id}/likedOrganizations`, {
+      headers: {
+        'Authorization': `Bearer ${user.token}`,
+      },
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      setLikedOrganizations(data.likedOrganizations || []);
+    } else {
+      console.error('Failed to fetch liked organizations');
+      setLikedOrganizations([]);
+    }
+  } catch (error) {
+    console.error('Failed to fetch liked organizations', error);
+    setLikedOrganizations([]);
+  }
+};
 
-        if (!userResponse.ok) {
-          throw new Error('Failed to fetch user details');
-        }
+    fetchLikedOrganizations();
+  }, [user]);
 
-        const user = userData.user;
-
-        // Make additional API calls or function invocations to retrieve the liked organizations and interested events
-        const orgResponse = await fetch(`/api/users/${user.id}/likedOrganizations`);
-        const eventResponse = await fetch(`/api/users/${user.id}/interestedEvents`);
-
-        if (!orgResponse.ok || !eventResponse.ok) {
-          throw new Error('Failed to fetch user details');
-        }
-
-        const orgData = await orgResponse.json();
-        const eventData = await eventResponse.json();
-
-        setLikedOrganizations(orgData.organizations);
-        setInterestedEvents(eventData.events);
-      } catch (error) {
-        console.error('Error fetching user details:', error);
-      }
-    };
-
-    fetchUserDetails();
-  }, [userId]);
 
   return (
     <div className="user-dashboard">
+      <Navbar />
       <h2>Liked Organizations</h2>
       <div className="user-organizations">
-        {likedOrganizations.map(org => (
-          <OrganizationList key={org._id} organization={org} />
-        ))}
-      </div>
-      <h2>Interested Events</h2>
-      <div className="user-events">
-        {interestedEvents.map(event => (
-          <EventList key={event._id} event={event} />
+        {likedOrganizations.map((org) => (
+          <DashboardCard
+          key={org._id}
+          organization={org}
+          onUnlike={() => handleUnlike(org._id)}
+          user={user}
+          liked={likedOrganizations.some(o => o._id === org._id)}
+          />
         ))}
       </div>
     </div>

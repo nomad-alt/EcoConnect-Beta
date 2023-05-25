@@ -1,77 +1,65 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import OrganizationCard from './OrganizationCard';
 import { AuthContext } from '../context/AuthContext';
 
-const OrganizationList = ({ organizations, category }) => {
-  const { user } = useContext(AuthContext);
-  console.log("User in OrganizationList: ", user);
+const OrganizationList = ({ organizations, category, onLike }) => {
 
-  const getImageUrl = (category) => {
-    switch (category) {
-      case 'Ocean':
-        return oceanImage;
-      case 'Forest':
-        return forestImage;
-      case 'Desert':
-        return desertImage;
-      case 'Jungle':
-        return jungleImage;
-      default:
-        return null;
-    }
-  };
-
-const filteredOrganizations = organizations
-    .filter(org => org.category === category)
-    .map(org => ({
+  const filteredOrganizations = organizations
+    .filter((org) => org.category && org.category.toLowerCase() === category.toLowerCase())
+    .map((org) => ({
       ...org,
-      id: org._id // Assign the correct ID property from your organization object
+      id: org._id,
     }));
 
+  const [likedOrganizations, setLikedOrganizations] = useState([]);
+
+  useEffect(() => {
+    setLikedOrganizations([]);
+  }, [category]);
+
+  useEffect(() => {
+    const likedOrgIds = organizations.filter((org) => likedOrganizations.includes(org.id)).map((org) => org.id);
+
+    setLikedOrganizations(likedOrgIds);
+  }, [organizations]);
+
   const handleLike = async (orgId) => {
-  if (!user) {
-    console.log("User not logged in.");
-    return;
-  }
+    console.log(`Liked organization with id: ${orgId}`);
+    onLike(orgId);
+  };
 
-  try {
-    const response = await fetch(`http://localhost:5173/api/users/${user.id}/likedOrganizations/${orgId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+  const handleUnlike = async (orgId) => {
+    console.log(`Unliked organization with id: ${orgId}`);
+    onUnlike(orgId);
+  };
 
-    if (response.ok) {
-      // handle successful response
-      console.log(`Organization ${orgId} was liked.`);
-    } else {
-      // handle error response
-      console.error('An error occurred while liking the organization');
-    }
-  } catch (error) {
-    // handle network error
-    console.error('An error occurred while sending the request', error);
-  }
-};
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="organization-list">
-      <h2 className="organization-category">{category}</h2>
+      <h2 className="organization-category">{category.toUpperCase()}</h2>
+
       <div className="organization-cards">
         {filteredOrganizations.map((organization) => (
           <OrganizationCard
-            key={organization.id}
-            organization={organization}
-            imageUrl={getImageUrl(organization.category)}
-            onLike={handleLike}
-            user={user}
+          key={organization.id}
+          organization={organization}
+          onLike={handleLike}
+          onUnlike={handleUnlike}
+          user={user}
           />
         ))}
       </div>
     </div>
   );
+};
+
+OrganizationList.propTypes = {
+  organizations: PropTypes.array.isRequired,
+  category: PropTypes.string.isRequired,
+  onLike: PropTypes.func.isRequired,
+  onUnlike: PropTypes.func.isRequired,
 };
 
 export default OrganizationList;

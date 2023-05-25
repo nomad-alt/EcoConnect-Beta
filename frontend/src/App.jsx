@@ -7,10 +7,12 @@ import UserDashboard from './components/UserDashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthContextProvider } from './context/AuthContext';
+import { useAuthContext } from './hooks/useAuthContext';
 
 const AuthRoutes = ({ Component, ...props }) => {
-  const isAuthenticated = true; // Replace with your actual authentication logic
-  return isAuthenticated ? <Component {...props} /> : <Navigate to="/login" replace />;
+  const { user } = useAuthContext();  // Assuming user object has an 'id' property
+  const isAuthenticated = user != null;
+  return isAuthenticated ? <Component userId={user.id} {...props} /> : <Navigate to="/login" replace />;
 };
 
 function App() {
