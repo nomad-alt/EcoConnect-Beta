@@ -1,41 +1,69 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
-const OrganizationCard = ({ organization, user, onLike, imageUrl }) => {
-  console.log("User in OrganizationCard: ", user);
+const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) => {
+  console.log('User in OrganizationCard: ', user);
   console.log(organization, imageUrl, user);
 
   const { id, name, description, category, website, donateLink, additionalLinks } = organization;
   const [liked, setLiked] = useState(false);
+
 
   const handleLike = async () => {
     if (!user) {
       window.location.href = '/login';
       return;
     }
-
+    console.log("Org ID: ", organization.id);
     try {
-  const response = await fetch(`/api/users/${user.id}/likedOrganizations/${organization.id}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${user.token}`,
-    },
-  });
-
-  if (response.ok) {
-    // Update the state to reflect that the organization has been liked
-    setLiked(true);
-    onLike(organization.id); // Notify parent component that the organization has been liked
-  } else {
-    // Log the status and status text of the response
-    console.error('An error occurred while liking the organization, status:', response.status, 'status text:', response.statusText);
-  }
-} catch (error) {
-  // Handle any errors that occur while sending the request
-  console.error('An error occurred while liking the organization', error);
-}
+      const response = await fetch(`/api/users/${user.id}/likedOrganizations/${organization.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+    
+      if (response.ok) {
+        // Update the state to reflect that the organization has been liked
+        setLiked(true);
+        onLike(organization.id); // Notify parent component that the organization has been liked
+      } else {
+        // Log the status and status text of the response
+        console.error('An error occurred while liking the organization, status:', response.status, 'status text:', response.statusText);
+      }
+    } catch (error) {
+      // Handle any errors that occur while sending the request
+      console.error('An error occurred while liking the organization', error);
+    }
   };
+
+  const handleUnlike = async () => {
+    if (!user) {
+        window.location.href = '/login';
+        return;
+    }
+    try {
+        const response = await fetch(`/api/users/${user.id}/likedOrganizations/${organization.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${user.token}`,
+            },
+        });
+
+        if (response.ok) {
+          if (response.ok) {
+            setLiked(false);
+            onUnlike(organization.id);
+          }
+        } else {
+            console.error('An error occurred while unliking the organization, status:', response.status, 'status text:', response.statusText);
+        }
+    } catch (error) {
+        console.error('An error occurred while unliking the organization:', error);
+    }
+};
 
   const handleShare = () => {
     // Implement the share functionality here
@@ -55,11 +83,18 @@ const OrganizationCard = ({ organization, user, onLike, imageUrl }) => {
         Visit Website
       </a>
       <div className="organization-buttons">
-        <button onClick={handleLike} disabled={liked} className="organization-like">
-          {liked ? 'Liked' : 'Like'}
-        </button>
-        <button onClick={handleShare} className="organization-share">Share</button>
-        <button onClick={handleDonate} className="organization-donate">Donate</button>
+      {liked ? (
+  <button onClick={handleUnlike} className="organization-remove">Remove</button>
+) : (
+  <button onClick={handleLike} className="organization-like">Like</button>
+)}
+
+  <button onClick={handleShare} className="organization-share">
+    Share
+  </button>
+  <button onClick={handleDonate} className="organization-donate">
+    Donate
+  </button>
       </div>
       <ul className="additional-links">
         {additionalLinks.map((link, index) => (
@@ -89,6 +124,7 @@ OrganizationCard.propTypes = {
     token: PropTypes.string.isRequired,
   }),
   onLike: PropTypes.func.isRequired,
+  onUnlike: PropTypes.func.isRequired,
 };
 
 export default OrganizationCard;

@@ -1,51 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
-import OrganizationList from './OrganizationList';
+import OrganizationCard from './OrganizationCard';
 import Navbar from './Navbar';
 
 const UserDashboard = () => {
   const { user } = useAuthContext();
   const [likedOrganizations, setLikedOrganizations] = useState([]);
+  const handleUnlike = (orgId) => {
+    setLikedOrganizations(likedOrganizations.filter(org => org._id !== orgId));
+  };
+  const handleLike = (orgId) => {
+    setLikedOrganizations([...likedOrganizations, orgId]);
+};
+  
 
   useEffect(() => {
-    const fetchLikedOrganizations = async () => {
-      try {
-        const response = await fetch(`/api/users/${user.id}/likedOrganizations`, {
-          headers: {
-            'Authorization': `Bearer ${user.token}`,
-          },
-        });
+    // Fetch liked organizations from the API
+const fetchLikedOrganizations = async () => {
+  if (!user) return;
+  
+  try {
+    const response = await fetch(`/api/users/${user.id}/likedOrganizations`, {
+      headers: {
+        'Authorization': `Bearer ${user.token}`,
+      },
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      setLikedOrganizations(data.likedOrganizations || []);
+    } else {
+      console.error('Failed to fetch liked organizations');
+      setLikedOrganizations([]);
+    }
+  } catch (error) {
+    console.error('Failed to fetch liked organizations', error);
+    setLikedOrganizations([]);
+  }
+};
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch liked organizations');
-        }
-
-        const { likedOrganizations: orgData } = await response.json();
-
-        if (Array.isArray(orgData)) {
-          setLikedOrganizations(orgData);
-        } else {
-          throw new Error('Liked organizations data is not an array');
-        }
-      } catch (error) {
-        console.error('Error fetching liked organizations:', error);
-        // Handle the error state here, e.g., display an error message to the user
-      }
-    };
 
     fetchLikedOrganizations();
-  }, [user.id, user.token]);
+  }, [user]);
+
 
   return (
     <div className="user-dashboard">
       <Navbar />
       <h2>Liked Organizations</h2>
       <div className="user-organizations">
-        {likedOrganizations.map(org => (
-          <OrganizationList
-            key={org._id}
-            organizations={likedOrganizations}
-            category={org.category}
+        {likedOrganizations.map((org) => (
+          <OrganizationCard
+          key={org._id}
+          organization={org}
+          onLike={() => handleLike(org._id)}
+          onUnlike={() => handleUnlike(org._id)}
+          user={user}
+          liked={likedOrganizations.some(o => o._id === org._id)}
           />
         ))}
       </div>
