@@ -1,0 +1,74 @@
+services:
+  - name: postgres:14.1
+    alias: postgresdb
+
+stages:
+  - setup
+  - publish
+
+.base_template:
+  image: node:current
+
+frontend-setup:
+  stage: setup
+  extends: .base_template
+  script:
+   - cd frontend
+   - yarn install
+  artifacts:
+    paths:
+      - frontend/node_modules 
+
+frontend-build:
+  stage: setup
+  extends: .base_template
+  script:
+    - cd frontend
+    - yarn build
+  depends_on: ["frontend-setup"]
+  allow_failure:
+    exit_codes:
+      - 1
+  variables:
+    CI: "false"    
+  artifacts:
+    paths:
+      - frontend/dist
+
+backend-setup:
+  stage: setup
+  extends: .base_template
+  script:
+   - cd backend
+   - yarn install
+  artifacts:
+    paths:
+      - backend/node_modules
+    expire_in: 1 day
+
+backend-compile:
+  stage: setup
+  extends: .base_template
+  before_script:
+    - cd backend
+  script:
+    - yarn build
+  depends_on: ["backend-setup"]
+  artifacts:
+    paths:
+      - backend/dist
+
+publish-image:
+  stage: publish
+  image: docker:24.0.3
+  services:
+    - docker:24.0.3-dind-alpine3.18
+  before_script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_REGISTRY
+  script:
+    - docker pull $DOCKER_REGISTRY_IMAGE:latest || true
+    - export VERSION=$(git describe --tags --abbrev=0)
+    - docker build --cache-from $DOCKER_REGISTRY_IMAGE:latest -t $DOCKER_REGISTRY_IMAGE:$VERSION .
+    - docker tag $DOCKER_REGISTRY_IMAGE:$VERSION $DOCKER_REGISTRY_IMAGE:latest
+    - docker push $DOCKER_REGISTRY_IMAGE:latest
+    - docker push $DOCKER_REGISTRY_IMAGE:$VERSION
