@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
-const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) => {
-  console.log('User in OrganizationCard: ', user);
-  console.log(organization, imageUrl, user);
-
+const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl  }) => {
+  /* console.log('User in OrganizationCard: ', user);
+     console.log(organization, user, imageUrl); */
+  
   const { name, description, category, website, donateLink, additionalLinks } = organization;
   const [liked, setLiked] = useState(false);
 
@@ -74,10 +74,9 @@ const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) =>
 
   return (
     <div className="organization-card">
-      <img src={imageUrl} alt={name} className="organization-image" />
+      <img src={imageUrl} alt={name} className="organization-image" /> 
       <h3 className="organization-name">{name}</h3>
       <p className="organization-description">{description}</p>
-      <p className="organization-category">{category}</p>
       <a href={website} target="_blank" rel="noopener noreferrer" className="organization-website">
         Visit Website
       </a>
@@ -96,13 +95,13 @@ const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) =>
   </button>
       </div>
       <ul className="additional-links">
-        {additionalLinks.map((link, index) => (
+         {additionalLinks?.map((link, index) => (
           <li key={index}>
             <a href={link} target="_blank" rel="noopener noreferrer">
               Link {index + 1}
             </a>
           </li>
-        ))}
+        ))} 
       </ul>
     </div>
   );
@@ -116,7 +115,7 @@ OrganizationCard.propTypes = {
     website: PropTypes.string.isRequired,
     donateLink: PropTypes.string.isRequired,
     additionalLinks: PropTypes.arrayOf(PropTypes.string).isRequired,
-    imageUrl: PropTypes.string.isRequired,
+    //imageUrl: PropTypes.string.isRequired,
   }),
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,

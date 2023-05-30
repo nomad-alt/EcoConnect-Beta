@@ -36,22 +36,38 @@ const OrganizationList = ({ organizations, category, onLike }) => {
 
   const { user } = useContext(AuthContext);
 
-  return (
-    <div className="organization-list">
-      <h2 className="organization-category">{category.toUpperCase()}</h2>
+  const sortedByBiotope = organizations.filter(org => org.biotope === category);
+  const sortedArrays = {};
 
-      <div className="organization-cards">
-        {filteredOrganizations.map((organization) => (
-          <OrganizationCard
-          key={organization.id}
-          organization={organization}
-          onLike={handleLike}
-          onUnlike={handleUnlike}
-          user={user}
-          />
-        ))}
+  sortedByBiotope.forEach((obj) => {
+    const { category } = obj;
+    if (sortedArrays[category]) {
+      sortedArrays[category].push(obj);
+    } else {
+      sortedArrays[category] = [obj];
+    }
+  });
+  const arrayResult = Object.values(sortedArrays);
+
+  return (
+      <div className="organization-list">
+        <h2 className="organization-biotope">{category.toUpperCase()}</h2>
+        {arrayResult.map((organizationArray,index)=>(
+          <div className="organization-category" key={index}>
+            <h2>{organizationArray[0].category}</h2>
+            {organizationArray.map((organization) => (
+            <OrganizationCard
+            key={organization.id}
+            organization={organization}
+            onLike={handleLike}
+            onUnlike={handleUnlike}
+            imageUrl={organization.imageUrl}
+            user={user}
+            />
+          ))}
+        </div>
+      ))}
       </div>
-    </div>
   );
 };
 

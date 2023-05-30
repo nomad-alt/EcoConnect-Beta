@@ -12,9 +12,14 @@ const organizationSchema = new Schema(
       type: String,
       required: true,
     },
-    category: {
+    biotope: {
       type: String,
       enum: ["ocean", "forest", "desert", "jungle"],
+      required: true,
+    },
+   category: {
+      type: String,
+      enum: ["Coral Reef", "Fishing Scene", "Exposed Fish","Conserve Ecosystems"],
       required: true,
     },
     website: {

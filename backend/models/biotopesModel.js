@@ -8,7 +8,7 @@ const biotopesSchema = new Schema(
       type: String,
       required: true,
     },
-    category: {
+    biotope: {
       type: String,
       enum: ["ocean", "forest", "desert", "jungle"],
       required: true,
