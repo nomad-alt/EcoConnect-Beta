@@ -49,12 +49,11 @@ const Home = () => {
 
   return (
     <div className="home-page">
-      <Navbar key="navbar" />
       <div className="heroSection">
         <img src={landingHero} alt="Hero Image" className="heroImage" />
         <div className="about-box">
           <img src={logo} alt="logo" className="logoIcon" />
-          <h4>ecoconnect</h4>
+          <h4 className='ecoconnectLabel'>ecoconnect</h4>
           <p className="about-text">Uniting individuals and organizations to protect the natural world.</p>
         </div>
       </div>
@@ -70,6 +69,7 @@ const Home = () => {
           </Link>
         ))}
       </div>
+      <Navbar key="navbar" />
     </div>
   );
 };

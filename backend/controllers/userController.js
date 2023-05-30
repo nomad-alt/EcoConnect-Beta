@@ -1,115 +1,161 @@
-const User = require("../models/userModel");
-const jwt = require("jsonwebtoken");
+const User = require("../models/userModel")
+const jwt = require("jsonwebtoken")
+const {
+  Types: { ObjectId },
+} = require("mongoose")
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
-};
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" })
+}
 
-// login a user
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  // login a user
+  const { email, password } = req.body
 
   try {
-    const user = await User.login(email, password);
+    const user = await User.login(email, password)
 
     // create a token
-    const token = createToken(user._id);
+    const token = createToken(user._id)
 
-    res.status(200).json({ email, token });
+    // include user._id in the response
+    res.status(200).json({ _id: user._id.toString(), email, token })
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message })
   }
-};
+}
 
-// signup a user
 const signupUser = async (req, res) => {
-  const { email, password } = req.body;
+  // signup a user
+  const { email, password } = req.body
 
   try {
-    const user = await User.signup(email, password);
+    const user = await User.signup(email, password)
+
+    if (!user) {
+      throw new Error("User registration failed")
+    }
 
     // create a token
-    const token = createToken(user._id);
+    const token = createToken(user._id)
 
-    res.status(200).json({ email, token });
+    // include user._id in the response
+    res.status(200).json({ _id: user._id.toString(), email, token })
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message })
   }
-};
+}
 
-// add a liked organization
 const addLikedOrganization = async (req, res) => {
-  const { userId, orgId } = req.params;
+  console.log("addLikedOrganization route hit")
+  const { userId, orgId } = req.params
 
   try {
     const user = await User.findByIdAndUpdate(
       userId,
-      { $addToSet: { likedOrganizations: orgId } },
+      { $addToSet: { likedOrganizations: new ObjectId(orgId) } },
       { new: true }
-    );
+    )
 
-    res.status(200).json({ user });
+    if (!user) {
+      throw new Error("User not found")
+    }
+
+    res.status(200).json({ user })
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message })
   }
-};
+}
 
-// remove a liked organization
 const removeLikedOrganization = async (req, res) => {
-  const { userId, orgId } = req.params;
+  // remove a liked organization
+  const { userId, orgId } = req.params
 
   try {
     const user = await User.findByIdAndUpdate(
       userId,
       { $pull: { likedOrganizations: orgId } },
       { new: true }
-    );
+    )
 
-    res.status(200).json({ user });
+    res.status(200).json({ user })
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message })
   }
-};
+}
 
-// add an interested event
 const addInterestedEvent = async (req, res) => {
-  const { userId, eventId } = req.params;
+  // add an interested event
+  const { userId, eventId } = req.params
 
   try {
     const user = await User.findByIdAndUpdate(
       userId,
       { $addToSet: { interestedEvents: eventId } },
       { new: true }
-    );
+    )
 
-    res.status(200).json({ user });
+    res.status(200).json({ user })
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message })
   }
-};
+}
 
-// remove an interested event
 const removeInterestedEvent = async (req, res) => {
-  const { userId, eventId } = req.params;
+  // remove an interested event
+  const { userId, eventId } = req.params
 
   try {
     const user = await User.findByIdAndUpdate(
       userId,
       { $pull: { interestedEvents: eventId } },
       { new: true }
-    );
+    )
 
-    res.status(200).json({ user });
+    res.status(200).json({ user })
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message })
   }
-};
+}
+
+const getUser = async (req, res) => {
+  const { userId } = req.params
+  try {
+    const user = await User.findById(userId)
+    if (!user) {
+      throw new Error("User not found")
+    }
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(400).json({ error: error.message })
+  }
+}
+
+const getLikedOrganizations = async (req, res) => {
+  const { userId } = req.params
+
+  try {
+    const user = await User.findById(userId)
+      .populate("likedOrganizations")
+      .exec()
+    // handle user
+    res.status(200).json({ likedOrganizations: user.likedOrganizations })
+  } catch (error) {
+    console.error("Error fetching liked organizations:", error)
+    // return more detailed error message to the client
+    res
+      .status(500)
+      .json({ error: `Error fetching liked organizations: ${error.message}` })
+  }
+}
 
 module.exports = {
-  signupUser,
   loginUser,
+  signupUser,
   addLikedOrganization,
   removeLikedOrganization,
   addInterestedEvent,
   removeInterestedEvent,
-};
+  getUser,
+  getLikedOrganizations,
+}
