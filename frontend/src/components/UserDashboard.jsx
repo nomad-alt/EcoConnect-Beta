@@ -1,37 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import OrganizationList from './OrganizationList';
-import EventList from './EventList';
+import React, { useState, useEffect, useContext } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import DashboardCard from './DashboardCard';
+import Navbar from './Navbar';
 
-const UserDashboard = ({ userId }) => {
+const UserDashboard = () => {
+  const { user } = useAuthContext();
   const [likedOrganizations, setLikedOrganizations] = useState([]);
-  const [interestedEvents, setInterestedEvents] = useState([]);
+  const handleUnlike = (orgId) => {
+    setLikedOrganizations(likedOrganizations.filter(org => org._id !== orgId));
+  };
+  const handleLike = (orgId) => {
+    setLikedOrganizations([...likedOrganizations, orgId]);
+};
+  
 
   useEffect(() => {
-    // Fetch liked organizations and interested events for the user
-    const fetchUserDetails = async () => {
-      // Replace this with an API call to your backend
-      const userOrganizations = await getUserLikedOrganizations(userId);
-      const userEvents = await getUserInterestedEvents(userId);
+    // Fetch liked organizations from the API
+const fetchLikedOrganizations = async () => {
+  if (!user) return;
+  
+  try {
+    const response = await fetch(`/api/users/${user.id}/likedOrganizations`, {
+      headers: {
+        'Authorization': `Bearer ${user.token}`,
+      },
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      setLikedOrganizations(data.likedOrganizations || []);
+    } else {
+      console.error('Failed to fetch liked organizations');
+      setLikedOrganizations([]);
+    }
+  } catch (error) {
+    console.error('Failed to fetch liked organizations', error);
+    setLikedOrganizations([]);
+  }
+};
 
-      setLikedOrganizations(userOrganizations);
-      setInterestedEvents(userEvents);
-    };
+    fetchLikedOrganizations();
+  }, [user]);
 
-    fetchUserDetails();
-  }, [userId]);
 
   return (
     <div className="user-dashboard">
+      <Navbar />
       <h2>Liked Organizations</h2>
       <div className="user-organizations">
-        {likedOrganizations.map(org => (
-          <OrganizationList key={org._id} organizations={likedOrganizations} category={org.category} />
-        ))}
-      </div>
-      <h2>Interested Events</h2>
-      <div className="user-events">
-        {interestedEvents.map(event => (
-          <EventList key={event._id} events={interestedEvents} category={event.category} />
+        {likedOrganizations.map((org) => (
+          <DashboardCard
+          key={org._id}
+          organization={org}
+          onUnlike={() => handleUnlike(org._id)}
+          user={user}
+          liked={likedOrganizations.some(o => o._id === org._id)}
+          />
         ))}
       </div>
     </div>

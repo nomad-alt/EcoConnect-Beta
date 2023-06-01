@@ -16,8 +16,12 @@
     "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "react-router-dom": "^6.11.1",
     "react-share": "^4.4.1"
+=======
+    "react-router-dom": "^6.11.2"
+>>>>>>> a886a6d9cc8adc8248f82d66a8805707e1e8f355
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
@@ -27,6 +31,6 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "vite": "^4.3.2"
+    "vite": "^4.3.9"
   }
 }
