@@ -4,7 +4,6 @@ import OrganizationList from './OrganizationList';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
-
 const Organizations = () => {
   const [organizations, setOrganizations] = useState([]);
   const location = useLocation();
@@ -36,14 +35,12 @@ const Organizations = () => {
   return (
     <div className="organizations">
       <Navbar />
-      <h1>Organizations</h1>
-      <p>Explore various climate organizations.</p>
 
       <OrganizationList
-      organizations={organizations}
-      category={category}
-      likedOrganizations={likedOrganizations}
-     />
+        organizations={organizations}
+        category={category}
+        likedOrganizations={likedOrganizations}
+      />
     </div>
   );
 };
