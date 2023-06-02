@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrganizationCard from './OrganizationCard';
 import { AuthContext } from '../context/AuthContext';
-
 const OrganizationList = ({ organizations, category, onLike }) => {
 
   const filteredOrganizations = organizations
@@ -39,15 +38,14 @@ const OrganizationList = ({ organizations, category, onLike }) => {
   return (
     <div className="organization-list">
       <h2 className="organization-category">{category.toUpperCase()}</h2>
-
       <div className="organization-cards">
         {filteredOrganizations.map((organization) => (
           <OrganizationCard
-          key={organization.id}
-          organization={organization}
-          onLike={handleLike}
-          onUnlike={handleUnlike}
-          user={user}
+            key={organization.id}
+            organization={organization}
+            onLike={handleLike}
+            onUnlike={handleUnlike}
+            user={user}
           />
         ))}
       </div>

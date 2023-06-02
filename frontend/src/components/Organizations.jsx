@@ -35,8 +35,6 @@ const Organizations = () => {
   return (
     <div className="organizations">
       <Navbar />
-      <h1>Organizations</h1>
-      <p>Explore various climate organizations.</p>
 
       <OrganizationList
         organizations={organizations}

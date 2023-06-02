@@ -55,6 +55,7 @@ const Home = () => {
           <img src={logo} alt="logo" className="logoIcon" />
           <h4 className='ecoconnectLabel'>ecoconnect</h4>
           <p className="about-text">Uniting individuals and organizations to protect the natural world.</p>
+          <button className='learnMoreButton'>Learn more</button>
         </div>
       </div>
       <div className="categories">
