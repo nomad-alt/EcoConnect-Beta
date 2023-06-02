@@ -52,7 +52,9 @@ const Navbar = () => {
               ) : (
                 <>
                   <div className="login-get-started-links">
-                    <Link to="/login" onClick={hideMenu} className='signInLink'>Sign In</Link>
+                    <div className='signInButton'>
+                      <Link to="/login" onClick={hideMenu} className='signInLink'>Sign In</Link>
+                    </div>
                     <Link to="/signup" onClick={hideMenu} className='getStartedLink'>Get Started</Link>
                   </div>                </>
               )}
