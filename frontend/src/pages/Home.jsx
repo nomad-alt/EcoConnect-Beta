@@ -6,6 +6,8 @@ import oceanImage from '../assets/Biotopes/Ocean.jpg';
 import forestImage from '../assets/Biotopes/Forest.jpg';
 import desertImage from '../assets/Biotopes/Desert.jpg';
 import jungleImage from '../assets/Biotopes/Jungle.jpg';
+import landingHero from '../assets/Desktop Landing Hero/landingHero.png';
+import logo from '../assets/Desktop Landing Hero/logo.png';
 
 const Home = () => {
   const [biotopes, setBiotopes] = useState([]);
@@ -47,18 +49,30 @@ const Home = () => {
 
   return (
     <div className="home-page">
-    <Navbar key="navbar" />
-
-     <div className="categories">
-      {biotopes.map((biotope, index) => (
-        <Link key={biotope.category} to={`/organizations/${biotope.category}`}>
-          <img className="category-image" src={getImage(biotope.title)} alt={biotope.title} />
-          <h3 className="categoryTitle">{biotope.title}</h3>
-        </Link>
-      ))}
+      <div className="heroSection">
+        <img src={landingHero} alt="Hero Image" className="heroImage" />
+        <div className="about-box">
+          <img src={logo} alt="logo" className="logoIcon" />
+          <h4 className='ecoconnectLabel'>ecoconnect</h4>
+          <p className="about-text">Uniting individuals and organizations to protect the natural world.</p>
+          <button className='learnMoreButton'>Learn more</button>
+        </div>
+      </div>
+      <div className="categories">
+        {biotopes.map((biotope, index) => (
+          <Link key={biotope.category} to={`/organizations/${biotope.category}`}>
+            <div className="category-item">
+              <img className="category-image" src={getImage(biotope.title)} alt={biotope.title} />
+              <div className="category-content">
+                <h3 className="categoryTitle">{biotope.title}</h3>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+      <Navbar key="navbar" />
     </div>
-  </div>
-);
+  );
 };
 
 export default Home;
