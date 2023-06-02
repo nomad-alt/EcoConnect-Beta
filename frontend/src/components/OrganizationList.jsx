@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrganizationCard from './OrganizationCard';
 import { AuthContext } from '../context/AuthContext';
-
 const OrganizationList = ({ organizations, category, onLike }) => {
 
   const filteredOrganizations = organizations
@@ -50,24 +49,24 @@ const OrganizationList = ({ organizations, category, onLike }) => {
   const arrayResult = Object.values(sortedArrays);
 
   return (
-      <div className="organization-list">
-        <h2 className="organization-biotope">{category.toUpperCase()}</h2>
-        {arrayResult.map((organizationArray,index)=>(
-          <div className="organization-category" key={index}>
-            <h2>{organizationArray[0].category}</h2>
-            {organizationArray.map((organization) => (
+    <div className="organization-list">
+      <h2 className="organization-biotope">{category.toUpperCase()}</h2>
+      {arrayResult.map((organizationArray, index) => (
+        <div className="organization-category" key={index}>
+          <h2>{organizationArray[0].category}</h2>
+          {organizationArray.map((organization) => (
             <OrganizationCard
-            key={organization.id}
-            organization={organization}
-            onLike={handleLike}
-            onUnlike={handleUnlike}
-            imageUrl={organization.imageUrl}
-            user={user}
+              key={organization.id}
+              organization={organization}
+              onLike={handleLike}
+              onUnlike={handleUnlike}
+              imageUrl={organization.imageUrl}
+              user={user}
             />
           ))}
         </div>
       ))}
-      </div>
+    </div>
   );
 };
 
