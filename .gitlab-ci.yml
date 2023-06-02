@@ -13,8 +13,8 @@ frontend-setup:
   stage: setup
   extends: .base_template
   script:
-   - cd frontend
-   - yarn install
+    - cd frontend
+    - yarn install
   artifacts:
     paths:
       - frontend/node_modules 
@@ -25,7 +25,8 @@ frontend-build:
   script:
     - cd frontend
     - yarn build
-  depends_on: ["frontend-setup"]
+  dependencies:
+    - frontend-setup
   allow_failure:
     exit_codes:
       - 1
@@ -39,8 +40,8 @@ backend-setup:
   stage: setup
   extends: .base_template
   script:
-   - cd backend
-   - yarn install
+    - cd backend
+    - yarn install
   artifacts:
     paths:
       - backend/node_modules
@@ -53,7 +54,8 @@ backend-compile:
     - cd backend
   script:
     - yarn build
-  depends_on: ["backend-setup"]
+  dependencies:
+    - backend-setup
   artifacts:
     paths:
       - backend/dist
