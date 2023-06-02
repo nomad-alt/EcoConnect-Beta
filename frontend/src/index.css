@@ -1,51 +1,236 @@
 /* google font */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* layout */
 :root {
   --primary: #1aac83;
   --error: #e7195a;
 }
+
 body {
   background: #f1f1f1;
   margin: 0;
-  font-family: "Poppins";
+  font-family: 'Poppins', sans-serif;
+  max-width: 100vw;
 }
+
 header {
+  margin-top: 100px;
   background: #fff;
 }
+
 header .container {
-  max-width: 1400px;
-  margin: 0 auto;
   padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-header a {
-  color: #333;
-  text-decoration: none;
+
+.container {
+  position: absolute;
+  height: 300px;
+  top: -100px;
 }
 
+.slide-menu {
+  font-size: x-large;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  gap: 4em;
+  width: 304px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+}
+
+.slide-menu a {
+  font-family: 'Poppins', sans-serif;
+  margin-left: 1.5em;
+}
+
+.homeLink {
+  margin-top: 4em;
+}
+
+.biotope-dropdown a {
+  font-family: 'Poppins', sans-serif;
+  font-size: 21px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.7em;
+}
+
+.biotope-dropdown {
+  margin-top: -3em;
+}
+
+.login-get-started-buttons {
+  display: flex;
+  gap: 1em;
+}
+
+.login-get-started-links {
+  display: flex;
+  gap: 3em;
+  flex-direction: column;
+  margin-left: 0.35em;
+}
+
+.signInButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 6em;
+  border-radius: 8px;
+  position: fixed;
+  right: 180px;
+}
+
+.signInButton:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+
+.getStartedButton {
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 9em;
+  height: 3.7em;
+  border-radius: 8px;
+  position: fixed;
+  right: 20px;
+  top: 30px;
+}
+
+.signInLink,
+.getStartedLink {
+  font-size: large;
+}
+
+header {
+  margin-top: 0;
+  height: 400px;
+  /* Add a specific height */
+  position: absolute;
+  top: 0;
+  z-index: 999;
+}
+
+header a {
+  text-decoration: none;
+  color: black;
+}
+
+header a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
 /* navbar */
+
+.menuIcon {
+  color: white;
+  width: 4em;
+  height: 1.5em;
+}
+
 nav {
   display: flex;
   align-items: center;
 }
+
 nav a {
   margin-left: 10px;
 }
+
 /* auth forms */
 form.signup,
 form.login {
   display: flex;
   flex-direction: column;
-  align-items: center;
   max-width: 400px;
   margin: 40px auto;
-  padding: 20px;
+  margin-top: 5em;
+  padding: 40px;
   background: #fff;
-  border-radius: 4px;
+}
+
+.emailInput,
+.passwordInput {
+  width: 316px;
+  height: 48px;
+  border: 1px solid #9B9B9B;
+  border-radius: 8px;
+  margin-bottom: 1em;
+}
+
+.emailLabel,
+.passwordLabel {
+  margin: 0;
+  text-align: start;
+  margin-left: 2.5em;
+  align-self: flex-start;
+}
+
+.signInHeader {
+  margin: 0;
+  text-align: start;
+  margin-left: 2.5em;
+  align-self: flex-start;
+  margin-bottom: 2em;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 578px;
+  height: 500px;
+  left: 431px;
+  background: #FFFFFF;
+  /* Card Shadow */
+  box-shadow: 0px 3.97988px 12.8581px rgba(92, 92, 92, 0.2);
+  border-radius: 12px;
+}
+
+.signInButtonPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+  width: 159px;
+  height: 52px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: medium;
+  background-color: black;
+  border-radius: 24.6316px;
+  border: none;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+  color: var(--error);
+  font-size: small;
 }
 
 nav button {
@@ -54,15 +239,11 @@ nav button {
   border: 2px solid var(--primary);
   padding: 6px 10px;
   border-radius: 4px;
-  font-family: "Poppins";
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
   font-size: 1em;
 }
 
-.categories {
-  display: flex;
-  flex-direction: column;
-}
 
 .category {
   position: relative;
@@ -74,6 +255,11 @@ nav button {
   height: 200px;
   max-width: cover;
   object-fit: cover;
+}
+
+.category-image:hover {
+  opacity: 80%;
+  transition: ease-in-out 300ms;
 }
 
 .categoryTitle {
@@ -122,7 +308,7 @@ nav button {
 }
 
 .organization-category {
-  font-style: italic;
+  font-family: 'Poppins', sans-serif;
   margin-bottom: 10px;
 }
 
@@ -147,6 +333,10 @@ nav button {
   background-color: #303f9f;
 }
 
+.organizations {
+  font-family: 'Poppins', sans-serif;
+}
+
 .additional-links {
   margin-top: 10px;
 }
@@ -160,4 +350,190 @@ nav button {
 
 .additional-links a:hover {
   text-decoration: underline;
+}
+
+.categoryTitle {
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  font-style: normal;
+  font-weight: 450;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.07em;
+  color: #FFFFFF;
+  text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.category-image {
+  width: 261px;
+  height: 341px;
+  opacity: 60%;
+  object-fit: cover;
+  background: #000000;
+  /* Card Shadow */
+
+  box-shadow: 0px 3.97988px 12.8581px rgba(92, 92, 92, 0.2);
+  border-radius: 12px;
+}
+
+.category-item {
+  background-color: black;
+  border-radius: 12px;
+  width: 261px;
+  height: 341px;
+  position: relative;
+}
+
+.category-content {
+  position: absolute;
+  bottom: 0px;
+  right: 70px;
+  width: 100%;
+  text-align: center;
+}
+
+.categories {
+  display: flex;
+  margin-top: 36em;
+  gap: 50px;
+  margin-bottom: 5em;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.categories:before,
+.categories:after {
+  content: "";
+  flex: 0 0 5em;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}
+
+.category-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+
+
+.heroImage {
+  background-color: black;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 447px;
+  background-position: center;
+}
+
+.about-box {
+  position: absolute;
+  width: 500px;
+  height: 218px;
+  left: 8em;
+  top: 180px;
+  background: #F6ECEA;
+  border-radius: 15.3469px;
+}
+
+.about-text {
+  position: absolute;
+  width: 310.25px;
+  height: 52.11px;
+  left: 56.1px;
+  top: 80px;
+
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14.1316px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+
+  color: #000000;
+}
+
+.logoIcon {
+  height: 2em;
+  position: absolute;
+  left: 39%;
+  right: 53.74%;
+  top: 27%;
+  bottom: 68.35%;
+}
+
+.learnMoreButton {
+  font-family: 'Poppins', sans-serif;
+  position: absolute;
+  width: 162px;
+  height: 48px;
+  left: 300px;
+  top: 149px;
+  border-radius: 20px;
+  border: none;
+  background-color: white;
+
+}
+
+h4 {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20.0685px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05em;
+  color: #393939;
+}
+
+.ecoconnectLabel {
+  margin-left: 2.7em;
+  margin-top: 2.4em;
+}
+
+
+@media (max-width: 600px) {
+
+  .categories {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 35em;
+    gap: 30px;
+  }
+
+  .categories:before,
+  .categories:after {
+    content: "";
+    flex: 0em;
+  }
+
+
+  .category-item {
+    width: 400px;
+    height: 150px;
+  }
+
+  .category-image {
+    width: 400px;
+    height: 150px;
+  }
+
+  .categoryTitle {
+    bottom: 20px;
+    font-size: 24px;
+    margin-right: 100px;
+  }
+
+  .about-box {
+    left: 0;
+    scale: 0.8;
+  }
+
 }
