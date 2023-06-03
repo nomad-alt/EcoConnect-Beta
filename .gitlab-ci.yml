@@ -15,7 +15,7 @@ frontend-setup:
   script:
     - cd frontend
     - yarn install
-    - yarn add --dev vite
+    - yarn add vite
   artifacts:
     paths:
       - frontend/node_modules 
@@ -25,6 +25,7 @@ frontend-build:
   extends: .base_template
   script:
     - cd frontend
+    - yarn add vite
     - yarn build
   dependencies:
     - frontend-setup
