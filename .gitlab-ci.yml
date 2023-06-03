@@ -1,0 +1,85 @@
+services:
+  - name: postgres:14.1
+    alias: postgresdb
+
+stages:
+  - setup
+  - publish
+
+.base_template:
+  image: node:current
+
+frontend-setup:
+  stage: setup
+  extends: .base_template
+  script:
+    - cd frontend
+    - yarn install    
+    - yarn add vite
+  artifacts:
+    paths:
+      - frontend/node_modules 
+
+frontend-build:
+  stage: setup
+  extends: .base_template
+  script:
+    - cd frontend
+    - yarn add vite
+    - yarn add @fortawesome/fontawesome-svg-core
+    - yarn build
+  dependencies:
+    - frontend-setup
+  allow_failure:
+    exit_codes:
+      - 1
+  variables:
+    CI: "false"    
+  artifacts:
+    paths:
+      - frontend/dist
+
+backend-setup:
+  stage: setup
+  extends: .base_template
+  script:
+    - cd backend
+    - yarn install
+  artifacts:
+    paths:
+      - backend/node_modules
+    expire_in: 1 day
+
+backend-compile:
+  stage: setup
+  extends: .base_template
+  before_script:
+    - cd backend
+  script:
+    - yarn start
+  dependencies:
+    - backend-setup
+  artifacts:
+    paths:
+      - backend/dist
+
+build-image:
+  stage: publish
+  image: docker:23.0.6
+  services:
+    - docker:23.0.6-dind-alpine3.17
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - >
+      if [ -z "$CI_COMMIT_TAG" ]; then
+        export VERSION="$CI_COMMIT_SHA";
+      else
+        export VERSION="$CI_COMMIT_TAG";
+      fi;
+      docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$VERSION .;
+    - docker tag $CI_REGISTRY_IMAGE:$VERSION $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:$VERSION
+
