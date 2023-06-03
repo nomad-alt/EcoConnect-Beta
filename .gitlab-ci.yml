@@ -65,9 +65,9 @@ backend-compile:
 
 publish-image:
   stage: publish
-  image: docker:24.0.3
+  image: docker:23.0.6
   services:
-    - docker:24.0.3-dind-alpine3.18
+    - docker:23.0.6-dind-alpine3.17
   before_script:
     - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_REGISTRY
   script:
