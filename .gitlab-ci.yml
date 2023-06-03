@@ -69,7 +69,7 @@ publish-image:
   services:
     - docker:23.0.6-dind-alpine3.17
   before_script:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_REGISTRY
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker pull $DOCKER_REGISTRY_IMAGE:latest || true
     - export VERSION=$(git describe --tags --abbrev=0)
