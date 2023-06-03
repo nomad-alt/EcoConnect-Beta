@@ -26,6 +26,7 @@ frontend-build:
   extends: .base_template
   script:
     - cd frontend
+    - yarn add vite
     - yarn build
   dependencies:
     - frontend-setup
