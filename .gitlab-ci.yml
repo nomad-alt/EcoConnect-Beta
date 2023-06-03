@@ -53,7 +53,7 @@ backend-compile:
   before_script:
     - cd backend
   script:
-    - yarn dev
+    - yarn start
   dependencies:
     - backend-setup
   artifacts:
