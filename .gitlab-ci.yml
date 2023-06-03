@@ -15,6 +15,7 @@ frontend-setup:
   script:
     - cd frontend
     - yarn install
+    - yarn add @fortawesome/fontawesome-svg-core
     - yarn add vite
   artifacts:
     paths:
@@ -25,7 +26,6 @@ frontend-build:
   extends: .base_template
   script:
     - cd frontend
-    - yarn add vite
     - yarn build
   dependencies:
     - frontend-setup
