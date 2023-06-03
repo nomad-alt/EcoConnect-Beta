@@ -15,6 +15,7 @@ frontend-setup:
   script:
     - cd frontend
     - yarn install
+    - yarn add --dev vite
   artifacts:
     paths:
       - frontend/node_modules 
