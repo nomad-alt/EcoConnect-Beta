@@ -16,12 +16,10 @@
     "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
+    "react-linkedin-share-link": "^1.0.2",
     "react-router-dom": "^6.11.1",
-    "react-share": "^4.4.1"
-=======
-    "react-router-dom": "^6.11.2"
->>>>>>> a886a6d9cc8adc8248f82d66a8805707e1e8f355
+    "react-share": "^4.4.1",
+    "react-share-linkedin": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
