@@ -67,7 +67,6 @@ secrets/
 *.bak
 *.swp
 *.~
-
 # Ignore system-specific files
 Icon?
 Desktop.ini

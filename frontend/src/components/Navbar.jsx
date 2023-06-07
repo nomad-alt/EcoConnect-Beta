@@ -32,13 +32,13 @@ const Navbar = () => {
     <header>
       <div className="container">
         <nav>
-          <FontAwesomeIcon icon={faBars} onClick={toggleMenu} />
+          <FontAwesomeIcon icon={faBars} onClick={toggleMenu} className='menuIcon' />
           {menuVisible && (
             <div className="slide-menu">
-              <Link to="/" onClick={hideMenu}>Home</Link>
+              <div className='homeLink'><Link to="/" onClick={hideMenu}>Home</Link></div>
               {user && <Link to="/dashboard" onClick={hideMenu}>Profile</Link>}
               <Link to="/events" onClick={hideMenu}>Events</Link>
-              <div onClick={toggleBiotopeDropdown}>Biotopes</div>
+              <Link onClick={toggleBiotopeDropdown} className='biotopeLink'>Biotopes</Link>
               {biotopeDropdownVisible && (
                 <div className="biotope-dropdown">
                   <Link to="/biotopes/1" onClick={hideMenu}>Biotope 1</Link>
@@ -51,17 +51,24 @@ const Navbar = () => {
                 <button onClick={logoutAndHideMenu}>Sign Out</button>
               ) : (
                 <>
-                  <Link to="/login" onClick={hideMenu}>Sign In</Link>
-                  <Link to="/signup" onClick={hideMenu}>Get Started</Link>
-                </>
+                  <div className="login-get-started-links">
+                    <div className='signInButton'>
+                      <Link to="/login" onClick={hideMenu} className='signInLink'>Sign In</Link>
+                    </div>
+                    <Link to="/signup" onClick={hideMenu} className='getStartedLink'>Get Started</Link>
+                  </div>                </>
               )}
             </div>
           )}
         </nav>
         {!user && (
-          <div className="login-get-started-links">
-            <Link to="/login">Sign In</Link>
-            <Link to="/signup">Get Started</Link>
+          <div className="login-get-started-buttons">
+            <div className='signInButton'>
+              <Link to="/login" className='signInButton'>Sign In</Link>
+            </div>
+            <div className='getStartedButton'>
+              <Link to="/signup">Get Started</Link>
+            </div>
           </div>
         )}
       </div>

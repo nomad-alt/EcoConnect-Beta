@@ -14,7 +14,6 @@ const OrganizationCard = ({
   onUnlike,
   imageUrl,
 }) => {
-  const shareUrl = window.location.href;
   /* console.log('User in OrganizationCard: ', user);
      console.log(organization, user, imageUrl); */
 
@@ -93,7 +92,9 @@ const OrganizationCard = ({
         "An error occurred while unliking the organization:",
         error
       );
+      console.error('An error occurred while unliking the organization:', error);
     }
+  };
   };
 
   const handleShare = () => {
@@ -144,8 +145,8 @@ const OrganizationCard = ({
           Emai
         </EmailShareButton>
 
-        <LinkedinShareButton url={shareUrl} className="organization-share">
-          Linkiden
+        <LinkedinShareButton url={shareUrl} title={title} summary={description}>
+          Share on LinkedIn
         </LinkedinShareButton>
 
         <TwitterShareButton
@@ -164,7 +165,6 @@ const OrganizationCard = ({
         >
           Facebook
         </FacebookShareButton>
-
         <button onClick={handleDonate} className="organization-donate">
           Donate
         </button>
@@ -180,7 +180,7 @@ const OrganizationCard = ({
       </ul>
     </div>
   );
-};
+
 
 OrganizationCard.propTypes = {
   organization: PropTypes.shape({
