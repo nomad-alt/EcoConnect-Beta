@@ -38,14 +38,18 @@ const OrganizationList = ({ organizations, category, onLike }) => {
   const sortedByBiotope = organizations.filter(org => org.biotope === category);
   const sortedArrays = {};
 
-  sortedByBiotope.forEach((obj) => {
-    const { category } = obj;
-    if (sortedArrays[category]) {
-      sortedArrays[category].push(obj);
-    } else {
-      sortedArrays[category] = [obj];
-    }
-  });
+sortedByBiotope.forEach((obj) => {
+  // Ensure each organization has an id property
+  const organization = { ...obj, id: obj._id };
+
+  const { category } = organization;
+  if (sortedArrays[category]) {
+    sortedArrays[category].push(organization);
+  } else {
+    sortedArrays[category] = [organization];
+  }
+});
+
   const arrayResult = Object.values(sortedArrays);
 
   return (

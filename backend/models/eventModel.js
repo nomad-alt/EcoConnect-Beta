@@ -28,7 +28,7 @@ const eventSchema = new Schema(
       type: Date,
       required: true,
     },
-    category: {
+    biotope: {
       type: String,
       enum: ["ocean", "forest", "desert", "jungle"],
       required: true,
