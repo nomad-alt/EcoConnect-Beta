@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import OrganizationList from './OrganizationList';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-
+import biotopeHero from '../assets/Desktop Landing Hero/biotopeHero.png';
 const Organizations = () => {
   const [organizations, setOrganizations] = useState([]);
   const location = useLocation();
@@ -34,6 +34,10 @@ const Organizations = () => {
 
   return (
     <div className="organizations">
+      <div className="heroSection">
+        <img src={biotopeHero} alt="Hero Image" className="heroImage" />
+
+      </div>
       <Navbar />
 
       <OrganizationList

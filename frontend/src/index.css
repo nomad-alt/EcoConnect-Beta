@@ -33,6 +33,7 @@ header .container {
 .container {
   position: absolute;
   height: 300px;
+  width: 90vw;
   top: -100px;
 }
 
@@ -65,15 +66,11 @@ header .container {
   display: flex;
   flex-direction: column;
   margin-left: 1.7em;
+  margin-top: 15px;
 }
 
 .biotope-dropdown {
   margin-top: -3em;
-}
-
-.login-get-started-buttons {
-  display: flex;
-  gap: 1em;
 }
 
 .login-get-started-links {
@@ -83,23 +80,27 @@ header .container {
   margin-left: 0.35em;
 }
 
+.login-get-started-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: max-content;
+  gap: 1em;
+}
+
 .signInButton {
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  width: 6em;
+  width: 4em;
   border-radius: 8px;
-  position: fixed;
-  right: 180px;
 }
 
 .signInButton:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-
-
 
 .getStartedButton {
   font-family: 'Poppins', sans-serif;
@@ -111,14 +112,15 @@ header .container {
   width: 9em;
   height: 3.7em;
   border-radius: 8px;
-  position: fixed;
-  right: 20px;
-  top: 30px;
 }
 
 .signInLink,
 .getStartedLink {
   font-size: large;
+}
+
+a.signInLink {
+  position: absolute;
 }
 
 header {
@@ -149,6 +151,13 @@ header a:hover {
   height: 1.5em;
 }
 
+.menuIconBlack {
+  color: black;
+  width: 4em;
+  height: 1.5em;
+  padding: 48px 20px;
+}
+
 nav {
   display: flex;
   align-items: center;
@@ -165,7 +174,7 @@ form.login {
   flex-direction: column;
   max-width: 400px;
   margin: 40px auto;
-  margin-top: 5em;
+  margin-top: 0;
   padding: 40px;
   background: #fff;
 }
@@ -201,7 +210,7 @@ form.login {
   align-items: center;
   justify-content: center;
   width: 578px;
-  height: 500px;
+  height: 450px;
   left: 431px;
   background: #FFFFFF;
   /* Card Shadow */
@@ -270,10 +279,152 @@ nav button {
 
 /* Organization cards */
 
+.tabs {
+  display: flex;
+  position: relative;
+  left: 8.2em;
+  margin-top: 32em;
+  gap: 1em;
+  width: 15em;
+}
+
+.eventTab {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.eventTab::after {
+  content: "";
+  flex: 0 0 5em;
+}
+
+#biotope-tab {
+  font-family: 'Poppins', sans-serif;
+  font-size: medium;
+  border: none;
+  background-color: #F1F1F1;
+}
+
+#event-tab {
+  font-family: 'Poppins', sans-serif;
+  font-size: medium;
+  border: none;
+  background-color: #F1F1F1;
+}
+
+#biotope-tab:hover {
+  text-decoration: underline #FC7A64;
+  text-underline-offset: 1em;
+}
+
+#biotope-tab.active {
+  font-weight: 500;
+  text-decoration: 2px underline #FC7A64;
+  text-underline-offset: 1em;
+}
+
+#event-tab:hover {
+  text-decoration: underline #FC7A64;
+  text-underline-offset: 1em;
+}
+
+#event-tab.active {
+  font-weight: 500;
+  text-decoration: 2px underline #FC7A64;
+  text-underline-offset: 1em;
+}
+
+.event-header {
+  margin-left: 2.2em;
+  margin-top: 1em;
+  font-size: 60px;
+  font-weight: 600;
+  width: 10em;
+  letter-spacing: 5px;
+  margin-bottom: 0;
+}
+
+.event-info {
+  font-family: 'Poppins', sans-serif;
+  margin-top: 6em;
+  width: 35em;
+  margin-left: 8.5em;
+}
+
+.eventHeaderWithLine {
+  height: 100px;
+}
+
+.event-button {
+  width: 15em;
+  height: 4em;
+  background-color: #FC7A64;
+  margin-left: 10em;
+  border: none;
+  border-radius: 25px;
+  margin-bottom: 10em;
+  margin-top: 2em;
+}
+
+.event-button:hover {
+  background-color: #fa5538;
+}
+
+.event-link {
+  font-family: 'Poppins', sans-serif;
+  font-size: medium;
+  text-decoration: none;
+  color: white;
+}
+
+.eventImage {
+  width: auto;
+  height: 500px;
+  left: 800px;
+  top: 800px;
+  margin-top: 3em;
+}
+
+
+.eventUnderline {
+  position: relative;
+  bottom: 100px;
+  left: 125px;
+}
+
+.organization-list {
+  margin-top: 32em;
+  z-index: 9999;
+}
+
+.organization-biotope {
+  position: absolute;
+  top: 4.5em;
+  font-family: 'Poppins', sans-serif;
+  font-size: 60px;
+  letter-spacing: 5px;
+  font-weight: 600;
+  color: white;
+  margin-left: 1.5em;
+}
+
+.organization-category {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2em;
+  margin-top: 3em;
+  margin-left: 6em;
+  margin-bottom: 4em;
+}
+
 .organization-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 300px;
+  height: 450px;
   justify-content: space-between;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -281,6 +432,40 @@ nav button {
   padding: 20px;
   margin-bottom: 20px;
   transition: transform 0.3s ease;
+}
+
+.second-category {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 25px;
+  text-align: left;
+  flex-basis: 100%;
+}
+
+.organization-description {
+  overflow: hidden;
+}
+
+.organization-card .organization-description {
+  position: relative;
+  overflow: hidden;
+}
+
+.organization-card .organization-description::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.organization-card .organization-description {
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
 
 .organization-card:hover {
@@ -296,20 +481,22 @@ nav button {
 }
 
 .organization-name {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 1px;
   margin-bottom: 10px;
-  text-align: center;
+  text-align: left;
+  width: 100%;
+  margin-left: 1.2em;
+  margin-top: 7px;
 }
 
 .organization-description {
   margin-bottom: 10px;
-  text-align: center;
-}
-
-.organization-category {
-  font-family: 'Poppins', sans-serif;
-  margin-bottom: 10px;
+  font-weight: 100;
+  color: rgb(75, 75, 75);
+  text-align: left;
+  margin-left: 0.75em;
 }
 
 .organization-buttons {
@@ -321,7 +508,6 @@ nav button {
 .organization-buttons button {
   padding: 8px 16px;
   margin: 0 5px;
-  background-color: #3f51b5;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -329,13 +515,59 @@ nav button {
   transition: background-color 0.3s ease;
 }
 
-.organization-buttons button:hover {
-  background-color: #303f9f;
+.organization-share:hover,
+.organization-like:hover {
+  background-color: #14c8ff;
+}
+
+.organization-share,
+.organization-like {
+  background-color: #5bd5fa;
+}
+
+.organization-donate {
+  background-color: #FC7A64;
+}
+
+.organization-donate:hover {
+  background-color: #fa5538;
 }
 
 .organizations {
   font-family: 'Poppins', sans-serif;
 }
+
+.organization-website {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-decoration: none;
+  height: 40px;
+  width: 200px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4.08889px 30.6667px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.1em;
+}
+
+.organization-website:hover {
+  color: white;
+  background-color: #FC7A64;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+}
+
+.organization-card .website {
+  position: absolute;
+  bottom: 20px;
+  left: 5px;
+  padding: 5px;
+}
+
 
 .additional-links {
   margin-top: 10px;
@@ -394,7 +626,7 @@ nav button {
 
 .categories {
   display: flex;
-  margin-top: 36em;
+  margin-top: 5em;
   gap: 50px;
   margin-bottom: 5em;
   overflow-x: auto;
@@ -412,10 +644,7 @@ nav button {
   display: none;
 }
 
-.category-item {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-}
+
 
 
 
@@ -504,7 +733,7 @@ h4 {
   .categories {
     flex-direction: column;
     align-items: center;
-    margin-top: 35em;
+    margin-top: 2em;
     gap: 30px;
   }
 
@@ -536,4 +765,59 @@ h4 {
     scale: 0.8;
   }
 
+  .tabs {
+    left: 0;
+    margin-left: 3em;
+  }
+
+  .eventTab {
+    margin-left: -5em;
+  }
+
+}
+
+
+
+
+
+
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.overlay-content {
+  position: absolute;
+  display: flex;
+}
+
+.aboutImage {
+  width: auto;
+  height: 700px;
+}
+
+.close-overlay {
+  position: absolute;
+  right: 3em;
+  top: 3em;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  background-color: transparent;
+  border: none;
+  color: black;
+}
+
+.close-overlay:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
 }

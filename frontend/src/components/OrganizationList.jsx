@@ -54,10 +54,10 @@ sortedByBiotope.forEach((obj) => {
 
   return (
     <div className="organization-list">
-      <h2 className="organization-biotope">{category.toUpperCase()}</h2>
+      <h1 className="organization-biotope">{category.toUpperCase()}</h1>
       {arrayResult.map((organizationArray, index) => (
         <div className="organization-category" key={index}>
-          <h2>{organizationArray[0].category}</h2>
+          <h2 className='second-category'>{organizationArray[0].category}</h2>
           {organizationArray.map((organization) => (
             <OrganizationCard
               key={organization.id}

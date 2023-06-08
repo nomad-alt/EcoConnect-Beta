@@ -112,7 +112,14 @@ const handleShare = () => {
 
   return (
     <div className="organization-card">
-      <img src={imageUrl} alt={name} className="organization-image" />
+      <div className='image-container'>
+        <img src={imageUrl} alt={name} className="organization-image" />
+        <div className='website'>
+          <a href={website} target="_blank" rel="noopener noreferrer" className="organization-website">
+            Go to website
+          </a>
+        </div>
+      </div>
       <h3 className="organization-name">{name}</h3>
       <p className="organization-description">{description}</p>
       <a
@@ -182,6 +189,7 @@ const handleShare = () => {
         ))}
       </ul>
     </div>
+
   );
 };
 
