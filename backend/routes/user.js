@@ -8,6 +8,7 @@ const {
   addInterestedEvent,
   removeInterestedEvent,
   getLikedOrganizations,
+  getInterestedEvents,
   getUser,
 } = require("../controllers/userController");
 
@@ -37,5 +38,6 @@ router.delete(
 );
 router.get("/:userId", getUser);
 router.get("/:userId/likedOrganizations", requireAuth, getLikedOrganizations);
+router.get("/:userId/interestedEvents", requireAuth, getInterestedEvents);
 
 module.exports = router;

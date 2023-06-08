@@ -21,15 +21,12 @@ const OrganizationCard = ({
   const [liked, setLiked] = useState(false);
 
   const handleLike = async () => {
-    console.log(`handleLike called with orgId: ${orgId}`);
+    console.log(`handleLike called with orgId: ${organization.id}`);
+
     if (!user) {
       window.location.href = "/login";
       return;
     }
-    if (organization.id === undefined) {
-  console.error('organization.id is undefined!');
-  return;
-}
     try {
       const response = await fetch(
         `/api/users/${user.id}/likedOrganizations/${organization.id}`,

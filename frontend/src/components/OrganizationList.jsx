@@ -77,8 +77,6 @@ sortedByBiotope.forEach((obj) => {
 OrganizationList.propTypes = {
   organizations: PropTypes.array.isRequired,
   category: PropTypes.string.isRequired,
-  onLike: PropTypes.func.isRequired,
-  onUnlike: PropTypes.func.isRequired,
 };
 
 export default OrganizationList;
