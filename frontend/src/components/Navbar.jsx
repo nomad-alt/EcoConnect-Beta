@@ -41,10 +41,10 @@ const Navbar = () => {
               <Link onClick={toggleBiotopeDropdown} className='biotopeLink'>Biotopes</Link>
               {biotopeDropdownVisible && (
                 <div className="biotope-dropdown">
-                  <Link to="/biotopes/1" onClick={hideMenu}>Ocean</Link>
-                  <Link to="/biotopes/2" onClick={hideMenu}>Forest</Link>
-                  <Link to="/biotopes/3" onClick={hideMenu}>Desert</Link>
-                  <Link to="/biotopes/4" onClick={hideMenu}>Jungle</Link>
+                  <Link to="/organizations/ocean" onClick={hideMenu}>Ocean</Link>
+                  <Link to="/organizations/forest" onClick={hideMenu}>Forest</Link>
+                  <Link to="/organizations/desert" onClick={hideMenu}>Desert</Link>
+                  <Link to="/organizations/jungle" onClick={hideMenu}>Jungle</Link>
                 </div>
               )}
               {user ? (
