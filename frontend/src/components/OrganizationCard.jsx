@@ -119,14 +119,6 @@ const handleShare = () => {
       </div>
       <h3 className="organization-name">{name}</h3>
       <p className="organization-description">{description}</p>
-      <a
-        href={website}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="organization-website"
-      >
-        Visit Website
-      </a>
       <div className="organization-buttons">
         {liked ? (
           <button onClick={handleUnlike} className="organization-remove">
