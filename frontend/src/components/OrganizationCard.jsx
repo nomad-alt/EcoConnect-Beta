@@ -16,10 +16,11 @@ const OrganizationCard = ({
 }) => {
   /* console.log('User in OrganizationCard: ', user);
      console.log(organization, user, imageUrl); */
-
+  const shareUrl = window.location.href;
   const { name, description, category, website, donateLink, additionalLinks } =
     organization;
   const [liked, setLiked] = useState(false);
+  const [openModal, setModal] = useState(false);
 
   const handleLike = async () => {
     if (!user) {
@@ -92,13 +93,11 @@ const OrganizationCard = ({
         "An error occurred while unliking the organization:",
         error
       );
-      console.error('An error occurred while unliking the organization:', error);
     }
-  };
   };
 
   const handleShare = () => {
-    // Implement the share functionality here
+    setModal(true);
   };
 
   const handleDonate = () => {
@@ -128,59 +127,57 @@ const OrganizationCard = ({
             Like
           </button>
         )}
-        <button
-          /*    onClick={handleShare} */
-          onClick={() => {
-            navigator.clipboard.writeText(shareUrl);
-          }}
-        >
-          Copy to clickbord
-        </button>
-        <EmailShareButton
-          url={shareUrl}
-          separator
-          subject={name}
-          body={description}
-        >
-          Emai
-        </EmailShareButton>
+        <button onClick={handleShare}>
+          {openModal && (
+            <div>
+              <LinkedinShareButton
+                url={shareUrl}
+                title={name}
+                summary={description}
+              >
+                Share on LinkedIn
+              </LinkedinShareButton>
 
-        <LinkedinShareButton url={shareUrl} title={title} summary={description}>
-          Share on LinkedIn
-        </LinkedinShareButton>
-
-        <TwitterShareButton
-          url={shareUrl}
-          title={name}
-          hashtags={["chasAcademy", "EcoConnect"]}
-          className="organization-share"
-        >
-          Twiteer
-        </TwitterShareButton>
-        <FacebookShareButton
-          url={shareUrl}
-          quote={"Take care of envirement"}
-          description={description}
-          hashtags={["chasAcademy", "EcoConnect"]}
-        >
-          Facebook
-        </FacebookShareButton>
-        <button onClick={handleDonate} className="organization-donate">
-          Donate
+              <TwitterShareButton
+                url={shareUrl}
+                title={name}
+                hashtags={["chasAcademy", "EcoConnect"]}
+                className="organization-share"
+              >
+                Twiteer
+              </TwitterShareButton>
+              <FacebookShareButton
+                url={shareUrl}
+                quote={"Take care of environment"}
+                description={description}
+                hashtags={["chasAcademy", "EcoConnect"]}
+              >
+                Facebook
+              </FacebookShareButton>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(shareUrl);
+                }}
+              >
+                Copy to clipboard
+              </button>
+              <button onClick={() => setModal(false)}>X</button>
+            </div>
+          )}
         </button>
+        <ul className="additional-links">
+          {additionalLinks?.map((link, index) => (
+            <li key={index}>
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                Link {index + 1}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="additional-links">
-        {additionalLinks?.map((link, index) => (
-          <li key={index}>
-            <a href={link} target="_blank" rel="noopener noreferrer">
-              Link {index + 1}
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   );
-
+};
 
 OrganizationCard.propTypes = {
   organization: PropTypes.shape({
