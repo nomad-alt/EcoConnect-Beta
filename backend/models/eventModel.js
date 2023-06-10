@@ -8,15 +8,11 @@ const eventSchema = new Schema(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
     location: {
       type: String,
       required: true,
     },
-    link: {
+    organization: {
       type: String,
       required: true,
     },
@@ -24,11 +20,7 @@ const eventSchema = new Schema(
       type: Date,
       required: true,
     },
-    endDate: {
-      type: Date,
-      required: true,
-    },
-    category: {
+    biotope: {
       type: String,
       enum: ["ocean", "forest", "desert", "jungle"],
       required: true,

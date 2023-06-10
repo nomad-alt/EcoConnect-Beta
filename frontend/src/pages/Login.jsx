@@ -18,7 +18,7 @@ const Login = () => {
   return (
     <div>
       <Link to="/">
-        <FontAwesomeIcon icon={faBars} />
+        <FontAwesomeIcon icon={faBars} className="menuIconBlack" />
       </Link>
       <form className="login" onSubmit={handleSubmit}>
         <div className="signInHeader">

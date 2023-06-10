@@ -86,3 +86,7 @@ build-image:
     - docker push $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:$VERSION
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> f3d63edeab9ef7ead4ba759dc0c8276a0ec0ef02

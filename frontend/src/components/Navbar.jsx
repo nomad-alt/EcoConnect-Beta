@@ -41,10 +41,10 @@ const Navbar = () => {
               <Link onClick={toggleBiotopeDropdown} className='biotopeLink'>Biotopes</Link>
               {biotopeDropdownVisible && (
                 <div className="biotope-dropdown">
-                  <Link to="/biotopes/1" onClick={hideMenu}>Biotope 1</Link>
-                  <Link to="/biotopes/2" onClick={hideMenu}>Biotope 2</Link>
-                  <Link to="/biotopes/3" onClick={hideMenu}>Biotope 3</Link>
-                  <Link to="/biotopes/4" onClick={hideMenu}>Biotope 4</Link>
+                  <Link to="/organizations/ocean" onClick={hideMenu}>Ocean</Link>
+                  <Link to="/organizations/forest" onClick={hideMenu}>Forest</Link>
+                  <Link to="/organizations/desert" onClick={hideMenu}>Desert</Link>
+                  <Link to="/organizations/jungle" onClick={hideMenu}>Jungle</Link>
                 </div>
               )}
               {user ? (
@@ -52,7 +52,7 @@ const Navbar = () => {
               ) : (
                 <>
                   <div className="login-get-started-links">
-                    <div className='signInButton'>
+                    <div className='signInLink'>
                       <Link to="/login" onClick={hideMenu} className='signInLink'>Sign In</Link>
                     </div>
                     <Link to="/signup" onClick={hideMenu} className='getStartedLink'>Get Started</Link>

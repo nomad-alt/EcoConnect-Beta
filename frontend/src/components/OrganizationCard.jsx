@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import {
-  EmailShareButton,
   FacebookShareButton,
   LinkedinShareButton,
   TwitterShareButton,
@@ -14,15 +13,16 @@ const OrganizationCard = ({
   onUnlike,
   imageUrl,
 }) => {
-  /* console.log('User in OrganizationCard: ', user);
-     console.log(organization, user, imageUrl); */
+  console.log('User in OrganizationCard: ', user);
+
   const shareUrl = window.location.href;
   const { name, description, category, website, donateLink, additionalLinks } =
     organization;
   const [liked, setLiked] = useState(false);
-  const [openModal, setModal] = useState(false);
 
   const handleLike = async () => {
+    console.log(`handleLike called with orgId: ${organization.id}`);
+
     if (!user) {
       window.location.href = "/login";
       return;
@@ -96,9 +96,12 @@ const OrganizationCard = ({
     }
   };
 
-  const handleShare = () => {
-    setModal(true);
-  };
+
+ const [showModal, setShowModal] = useState(false);
+
+const handleShare = () => {
+  setShowModal(true);
+};
 
   const handleDonate = () => {
     window.open(donateLink, "_blank");
@@ -106,17 +109,16 @@ const OrganizationCard = ({
 
   return (
     <div className="organization-card">
-      <img src={imageUrl} alt={name} className="organization-image" />
+      <div className='image-container'>
+        <img src={imageUrl} alt={name} className="organization-image" />
+        <div className='website'>
+          <a href={website} target="_blank" rel="noopener noreferrer" className="organization-website">
+            Go to website
+          </a>
+        </div>
+      </div>
       <h3 className="organization-name">{name}</h3>
       <p className="organization-description">{description}</p>
-      <a
-        href={website}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="organization-website"
-      >
-        Visit Website
-      </a>
       <div className="organization-buttons">
         {liked ? (
           <button onClick={handleUnlike} className="organization-remove">
@@ -127,43 +129,43 @@ const OrganizationCard = ({
             Like
           </button>
         )}
-        <button onClick={handleShare}>
-          {openModal && (
-            <div>
-              <LinkedinShareButton
-                url={shareUrl}
-                title={name}
-                summary={description}
-              >
-                Share on LinkedIn
-              </LinkedinShareButton>
+        <button onClick={handleShare}>Share</button>
 
-              <TwitterShareButton
-                url={shareUrl}
-                title={name}
-                hashtags={["chasAcademy", "EcoConnect"]}
-                className="organization-share"
-              >
-                Twiteer
-              </TwitterShareButton>
-              <FacebookShareButton
-                url={shareUrl}
-                quote={"Take care of environment"}
-                description={description}
-                hashtags={["chasAcademy", "EcoConnect"]}
-              >
-                Facebook
-              </FacebookShareButton>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(shareUrl);
-                }}
-              >
-                Copy to clipboard
-              </button>
-              <button onClick={() => setModal(false)}>X</button>
-            </div>
-          )}
+        {showModal && (
+  <div className="modal">
+    <div className="modal-content">
+      <h2>Share this organization</h2>
+
+      <LinkedinShareButton
+        url={shareUrl} /* title={title} summary={description} */
+      >
+        Share on LinkedIn
+      </LinkedinShareButton>
+
+      <TwitterShareButton
+        url={shareUrl}
+        title={name}
+        hashtags={["chasAcademy", "EcoConnect"]}
+        className="organization-share"
+      >
+        Twitter
+      </TwitterShareButton>
+      
+      <FacebookShareButton
+        url={shareUrl}
+        quote={"Take care of environment"}
+        description={description}
+        hashtags={["chasAcademy", "EcoConnect"]}
+      >
+        Facebook
+      </FacebookShareButton>
+
+      <button onClick={() => setShowModal(false)}>X</button>
+    </div>
+  </div>
+)}
+        <button onClick={handleDonate} className="organization-donate">
+          Donate
         </button>
         <ul className="additional-links">
           {additionalLinks?.map((link, index) => (
@@ -176,6 +178,7 @@ const OrganizationCard = ({
         </ul>
       </div>
     </div>
+
   );
 };
 

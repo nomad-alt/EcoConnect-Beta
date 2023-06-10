@@ -1,31 +1,90 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import EventCard from './EventCard';
-import EventPopup from './EventPopUp';
+import { useAuthContext } from '../hooks/useAuthContext';
 
-const EventList = ({ events, category }) => {
-    const [selectedEvent, setSelectedEvent] = useState(null);
+const EventList = ({ events }) => {
+  const { user } = useAuthContext();
+  const [interestedEvents, setInterestedEvents] = useState([]);
+  const [activeBiotope, setActiveBiotope] = useState('all');
 
-    const handleEventClick = (event) => {
-    setSelectedEvent(event);
-  };
+  useEffect(() => {
+    setInterestedEvents([]);
+  }, [activeBiotope]);
 
-  const handleClosePopup = () => {
-    setSelectedEvent(null);
-  };
+  useEffect(() => {
+    const interestedEventIds = events.filter((event) => interestedEvents.includes(event.id)).map((event) => event.id);
+    setInterestedEvents(interestedEventIds);
+  }, [events]);
 
-  const filteredEvents = events.filter(event => event.category === category);
+  const handleInterest = async (eventId) => {
+  console.log(`Interested in event with id: ${eventId}`);
+  try {
+    const response = await fetch(`/api/users/${user.id}/interestedEvents/${eventId}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${user.token}`,
+      },
+    });
+
+    if (response.ok) {
+      setInterestedEvents(prev => [...prev, eventId]);
+    } else {
+      console.error('Failed to express interest in event');
+    }
+  } catch (error) {
+    console.error('Failed to express interest in event', error);
+  }
+};
+
+const handleUninterest = async (eventId) => {
+  console.log(`Not interested in event with id: ${eventId}`);
+  try {
+    const response = await fetch(`/api/users/${user.id}/interestedEvents/${eventId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${user.token}`,
+      },
+    });
+
+    if (response.ok) {
+      setInterestedEvents(prev => prev.filter(id => id !== eventId));
+    } else {
+      console.error('Failed to express uninterest in event');
+    }
+  } catch (error) {
+    console.error('Failed to express uninterest in event', error);
+  }
+};
+
+  const tabs = ['all', 'ocean', 'forest', 'desert', 'jungle'];
+  
+  const filteredEvents = activeBiotope === 'all' ? events : events.filter(event => event.biotope === activeBiotope);
 
   return (
     <div className="event-list">
-      <h2 className="event-category">{category}</h2>
-      <div className="event-cards">
-        {filteredEvents.map(event => (
-          <EventCard key={event._id} event={event} />
+      <div className="tab-container">
+        {tabs.map((tab) => (
+          <button key={tab} className={activeBiotope === tab ? "active" : ""} onClick={() => setActiveBiotope(tab)}>
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          </button>
         ))}
       </div>
-      {selectedEvent && <EventPopup event={selectedEvent} onClose={handleClosePopup} />}
+      {filteredEvents.map((event) => (
+        <EventCard
+          key={event._id}
+          event={event}
+          onInterest={() => handleInterest(event._id)}
+          onUninterest={() => handleUninterest(event._id)}
+          interested={interestedEvents.includes(event._id)}
+        />
+      ))}
     </div>
   );
+};
+
+EventList.propTypes = {
+  events: PropTypes.array.isRequired,
 };
 
 export default EventList;
