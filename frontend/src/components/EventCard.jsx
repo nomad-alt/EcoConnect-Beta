@@ -5,6 +5,7 @@ const EventCard = ({ event, onInterest, onUninterest, interested }) => {
   return (
   <div className="event-card">
     <img src={event.imageUrl} alt={event.title} />
+    <h2>{event.organization}</h2>
     <h2>{event.title}</h2>
     <p>{event.location}</p>
     <p>{event.startDate}</p>
