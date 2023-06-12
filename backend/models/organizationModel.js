@@ -17,9 +17,19 @@ const organizationSchema = new Schema(
       enum: ["ocean", "forest", "desert", "jungle"],
       required: true,
     },
-   category: {
+    category: {
       type: String,
-      enum: ["Coral Reef", "Fishing Scene", "Exposed Fish","Conserve Ecosystems"],
+      enum: [
+        "Coral Reef",
+        "Fishing Scene",
+        "Exposed Fish",
+        "Conserve Ecosystems",
+        "Industry Associaations",
+        "Land Degradation",
+        "Protect & Preserve",
+        "Conserve Jungles",
+        "Indigenous Rights",
+      ],
       required: true,
     },
     website: {
