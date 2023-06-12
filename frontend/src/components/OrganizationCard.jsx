@@ -1,27 +1,43 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+} from "react-share";
 
-const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) => {
-  /* console.log('User in OrganizationCard: ', user);
-     console.log(organization, user, imageUrl); */
+const OrganizationCard = ({
+  organization,
+  user,
+  onLike,
+  onUnlike,
+  imageUrl,
+}) => {
+  console.log('User in OrganizationCard: ', user);
 
-  const { name, description, category, website, donateLink, additionalLinks } = organization;
+  const shareUrl = window.location.href;
+  const { name, description, category, website, donateLink, additionalLinks } =
+    organization;
   const [liked, setLiked] = useState(false);
 
-
   const handleLike = async () => {
+    console.log(`handleLike called with orgId: ${organization.id}`);
+
     if (!user) {
-      window.location.href = '/login';
+      window.location.href = "/login";
       return;
     }
     try {
-      const response = await fetch(`/api/users/${user.id}/likedOrganizations/${organization.id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+      const response = await fetch(
+        `/api/users/${user.id}/likedOrganizations/${organization.id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         // Update the state to reflect that the organization has been liked
@@ -29,27 +45,35 @@ const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) =>
         onLike(organization.id); // Notify parent component that the organization has been liked
       } else {
         // Log the status and status text of the response
-        console.error('An error occurred while liking the organization, status:', response.status, 'status text:', response.statusText);
+        console.error(
+          "An error occurred while liking the organization, status:",
+          response.status,
+          "status text:",
+          response.statusText
+        );
       }
     } catch (error) {
       // Handle any errors that occur while sending the request
-      console.error('An error occurred while liking the organization', error);
+      console.error("An error occurred while liking the organization", error);
     }
   };
 
   const handleUnlike = async () => {
     if (!user) {
-      window.location.href = '/login';
+      window.location.href = "/login";
       return;
     }
     try {
-      const response = await fetch(`/api/users/${user.id}/likedOrganizations/${organization.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+      const response = await fetch(
+        `/api/users/${user.id}/likedOrganizations/${organization.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         if (response.ok) {
@@ -57,19 +81,30 @@ const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) =>
           onUnlike(organization.id);
         }
       } else {
-        console.error('An error occurred while unliking the organization, status:', response.status, 'status text:', response.statusText);
+        console.error(
+          "An error occurred while unliking the organization, status:",
+          response.status,
+          "status text:",
+          response.statusText
+        );
       }
     } catch (error) {
-      console.error('An error occurred while unliking the organization:', error);
+      console.error(
+        "An error occurred while unliking the organization:",
+        error
+      );
     }
   };
 
-  const handleShare = () => {
-    // Implement the share functionality here
-  };
+
+ const [showModal, setShowModal] = useState(false);
+
+const handleShare = () => {
+  setShowModal(true);
+};
 
   const handleDonate = () => {
-    window.open(donateLink, '_blank');
+    window.open(donateLink, "_blank");
   };
 
   return (
@@ -84,17 +119,51 @@ const OrganizationCard = ({ organization, user, onLike, onUnlike, imageUrl }) =>
       </div>
       <h3 className="organization-name">{name}</h3>
       <p className="organization-description">{description}</p>
-
       <div className="organization-buttons">
         {liked ? (
-          <button onClick={handleUnlike} className="organization-remove">Remove</button>
+          <button onClick={handleUnlike} className="organization-remove">
+            Remove
+          </button>
         ) : (
-          <button onClick={handleLike} className="organization-like">Like</button>
+          <button onClick={handleLike} className="organization-like">
+            Like
+          </button>
         )}
+        <button onClick={handleShare}>Share</button>
 
-        <button onClick={handleShare} className="organization-share">
-          Share
-        </button>
+        {showModal && (
+  <div className="modal">
+    <div className="modal-content">
+      <h2>Share this organization</h2>
+
+      <LinkedinShareButton
+        url={shareUrl} /* title={title} summary={description} */
+      >
+        Share on LinkedIn
+      </LinkedinShareButton>
+
+      <TwitterShareButton
+        url={shareUrl}
+        title={name}
+        hashtags={["chasAcademy", "EcoConnect"]}
+        className="organization-share"
+      >
+        Twitter
+      </TwitterShareButton>
+      
+      <FacebookShareButton
+        url={shareUrl}
+        quote={"Take care of environment"}
+        description={description}
+        hashtags={["chasAcademy", "EcoConnect"]}
+      >
+        Facebook
+      </FacebookShareButton>
+
+      <button onClick={() => setShowModal(false)}>X</button>
+    </div>
+  </div>
+)}
         <button onClick={handleDonate} className="organization-donate">
           Donate
         </button>

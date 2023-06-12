@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const DashboardCard = ({ organization, user, onUnlike, imageUrl }) => {
-  console.log('User in DashboardCard: ', user);
 
   const { _id, name, description, category, website, donateLink, additionalLinks } = organization;
 
@@ -57,27 +56,27 @@ const DashboardCard = ({ organization, user, onUnlike, imageUrl }) => {
         </button>
       </div>
       <ul className="additional-links">
-        {additionalLinks.map((link, index) => (
-          <li key={index}>
-            <a href={link} target="_blank" rel="noopener noreferrer">
-              Link {index + 1}
-            </a>
-          </li>
-        ))}
-      </ul>
+  {additionalLinks && Array.isArray(additionalLinks) && additionalLinks.map((link, index) => (
+    <li key={index}>
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        Link {index + 1}
+      </a>
+    </li>
+  ))}
+</ul>
     </div>
   );
 };
 
 DashboardCard.propTypes = {
     organization: PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired, // Changed id to _id here
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       category: PropTypes.string.isRequired,
       website: PropTypes.string.isRequired,
       donateLink: PropTypes.string.isRequired,
-      additionalLinks: PropTypes.arrayOf(PropTypes.string).isRequired,
+      additionalLinks: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     user: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -85,6 +84,6 @@ DashboardCard.propTypes = {
     }).isRequired,
     onUnlike: PropTypes.func.isRequired,
     imageUrl: PropTypes.string.isRequired,
-  };
+};
 
 export default DashboardCard;
