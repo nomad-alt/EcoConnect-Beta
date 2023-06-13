@@ -88,6 +88,21 @@ header .container {
   gap: 1em;
 }
 
+.signOutLink {
+  color: black;
+  border: 2px solid black;
+  width: 130px;
+  border-radius: 8px;
+  font-size: 17px;
+  margin-left: 2em;
+}
+
+.signOutLink:hover {
+  color: white;
+  background-color: rgb(255, 67, 95);
+  border: 2px solid rgb(255, 67, 95)
+}
+
 .signInButton {
   display: flex;
   justify-content: center;
@@ -279,6 +294,26 @@ nav button {
 
 /* Organization cards */
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+
 .tabs {
   display: flex;
   position: relative;
@@ -287,6 +322,55 @@ nav button {
   gap: 1em;
   width: 15em;
 }
+
+.event-tabs {
+  display: flex;
+  position: relative;
+  left: 6.2em;
+  margin-top: 32em;
+  gap: 2em;
+  width: 15em;
+}
+
+.dashboard-tabs {
+  display: flex;
+  position: relative;
+  left: 6.2em;
+  margin-top: 4em;
+  gap: 2em;
+  width: 20em;
+}
+
+#liked-tab {
+  font-family: 'Poppins', sans-serif;
+  font-size: medium;
+  border: none;
+  background-color: #F1F1F1;
+}
+
+#liked-tab:hover {
+  text-decoration: underline #FC7A64;
+  text-underline-offset: 1em;
+}
+
+#myEvents-tab {
+  font-family: 'Poppins', sans-serif;
+  font-size: medium;
+  border: none;
+  background-color: #F1F1F1;
+}
+
+#myEvents-tab:hover {
+  text-decoration: underline #FC7A64;
+  text-underline-offset: 1em;
+}
+
+.dashboard-tabs button.active {
+  font-weight: 500;
+  text-decoration: 2px underline #FC7A64;
+  text-underline-offset: 1em;
+}
+
 
 .eventTab {
   display: flex;
@@ -409,6 +493,46 @@ nav button {
   margin-left: 1.5em;
 }
 
+.profile-header {
+  font-family: 'Poppins', sans-serif;
+  font-size: 25px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: black;
+  margin-left: 4em;
+  margin-top: 41px;
+}
+
+.user-info {
+  margin-left: 6em;
+  margin-top: 5em;
+  width: 300px;
+  height: 150px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+.user-details {
+  padding-top: 1.5em;
+  margin-left: 1.8em;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  font-weight: 400;
+  color: black;
+}
+
+.user-email {
+  padding-top: 1em;
+  margin-left: 2em;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  font-weight: 200;
+  color: black;
+}
+
 .organization-category {
   display: flex;
   flex-wrap: wrap;
@@ -468,6 +592,32 @@ nav button {
   transition: opacity 0.5s ease;
 }
 
+.organization-description {
+  overflow: hidden;
+}
+
+.organization-card .event-description {
+  position: relative;
+  overflow: hidden;
+}
+
+.organization-card .event-description::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.organization-card .event-description {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
 .organization-card:hover {
   transform: translateY(-5px);
 }
@@ -491,6 +641,17 @@ nav button {
   margin-top: 7px;
 }
 
+.event-name {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  text-align: left;
+  width: 100%;
+  margin-left: 0.5em;
+  margin-top: 7px;
+}
+
 .organization-description {
   margin-bottom: 10px;
   font-weight: 100;
@@ -499,9 +660,51 @@ nav button {
   margin-left: 0.75em;
 }
 
+.event-description {
+  margin-bottom: 10px;
+  font-weight: 100;
+  color: rgb(75, 75, 75);
+  text-align: left;
+  margin-left: 0.5em;
+}
+
+.event-details {
+  font-size: 13px;
+  margin-bottom: 10px;
+  font-weight: 50;
+  color: rgb(75, 75, 75);
+  text-align: left;
+  margin-left: 0.5em;
+}
+
+.event-interest {
+  font-family: 'Poppins', sans-serif;
+  background-color: white;
+  box-shadow: 0px 4.08889px 30.6667px rgba(0, 0, 0, 0.1);
+  color: black;
+  width: 250px;
+  height: 35px;
+  border: none;
+  border-radius: 4px;
+}
+
+.event-interest:hover {
+  background-color: #FC7A64;
+  color: white;
+}
+
+.event-buttons {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 400px;
+  left: 25px;
+}
+
 .organization-buttons {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 10px;
 }
 
@@ -657,6 +860,17 @@ nav button {
   width: 100vw;
   height: 447px;
   background-position: center;
+}
+
+.heroImageEvents {
+  background-color: black;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 447px;
+
 }
 
 .about-box {

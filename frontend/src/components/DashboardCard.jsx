@@ -7,25 +7,25 @@ const DashboardCard = ({ organization, user, onUnlike, imageUrl }) => {
 
   const handleUnlike = async () => {
     if (!user) {
-        window.location.href = '/login';
-        return;
+      window.location.href = '/login';
+      return;
     }
     try {
-        const response = await fetch(`/api/users/${user.id}/likedOrganizations/${organization._id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${user.token}`,
-            },
-        });
+      const response = await fetch(`/api/users/${user.id}/likedOrganizations/${organization._id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
-        if (response.ok) {
-            onUnlike(_id);
-        } else {
-            console.error('An error occurred while unliking the organization, status:', response.status, 'status text:', response.statusText);
-        }
+      if (response.ok) {
+        onUnlike(_id);
+      } else {
+        console.error('An error occurred while unliking the organization, status:', response.status, 'status text:', response.statusText);
+      }
     } catch (error) {
-        console.error('An error occurred while unliking the organization:', error);
+      console.error('An error occurred while unliking the organization:', error);
     }
   };
 
@@ -38,14 +38,17 @@ const DashboardCard = ({ organization, user, onUnlike, imageUrl }) => {
   };
 
   return (
-    <div className="dashboard-card">
-      <img src={imageUrl} alt={name} className="organization-image" />
+    <div className="organization-card">
+      <div className='image-container'>
+        <img src={imageUrl} alt={name} className="organization-image" />
+        <div className='website'>
+          <a href={website} target="_blank" rel="noopener noreferrer" className="organization-website">
+            Visit Website
+          </a>
+        </div>
+      </div>
       <h3 className="organization-name">{name}</h3>
       <p className="organization-description">{description}</p>
-      <p className="organization-category">{category}</p>
-      <a href={website} target="_blank" rel="noopener noreferrer" className="organization-website">
-        Visit Website
-      </a>
       <div className="organization-buttons">
         <button onClick={handleUnlike} className="organization-remove">Remove</button>
         <button onClick={handleShare} className="organization-share">
@@ -56,34 +59,34 @@ const DashboardCard = ({ organization, user, onUnlike, imageUrl }) => {
         </button>
       </div>
       <ul className="additional-links">
-  {additionalLinks && Array.isArray(additionalLinks) && additionalLinks.map((link, index) => (
-    <li key={index}>
-      <a href={link} target="_blank" rel="noopener noreferrer">
-        Link {index + 1}
-      </a>
-    </li>
-  ))}
-</ul>
+        {additionalLinks && Array.isArray(additionalLinks) && additionalLinks.map((link, index) => (
+          <li key={index}>
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              Link {index + 1}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
 DashboardCard.propTypes = {
-    organization: PropTypes.shape({
-      _id: PropTypes.string.isRequired, // Changed id to _id here
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
-      website: PropTypes.string.isRequired,
-      donateLink: PropTypes.string.isRequired,
-      additionalLinks: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      token: PropTypes.string.isRequired,
-    }).isRequired,
-    onUnlike: PropTypes.func.isRequired,
-    imageUrl: PropTypes.string.isRequired,
+  organization: PropTypes.shape({
+    _id: PropTypes.string.isRequired, // Changed id to _id here
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    website: PropTypes.string.isRequired,
+    donateLink: PropTypes.string.isRequired,
+    additionalLinks: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+  }).isRequired,
+  onUnlike: PropTypes.func.isRequired,
+  imageUrl: PropTypes.string.isRequired,
 };
 
 export default DashboardCard;

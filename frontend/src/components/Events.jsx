@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import EventList from './EventList';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import eventHero from '../assets/Desktop Landing Hero/eventImage.png';
+import eventHero from '../assets/Desktop Landing Hero/eventHero.png';
 const Events = () => {
   const [events, setEvents] = useState([]);
   const location = useLocation();
@@ -33,9 +33,9 @@ const Events = () => {
   };
 
   return (
-    <div className="events">
+    <div className="organizations">
       <div className="heroSection">
-        <img src={eventHero} alt="Hero Image" className="eventImage" />
+        <img src={eventHero} alt="Hero Image" className="heroImageEvents" />
 
       </div>
       <Navbar />

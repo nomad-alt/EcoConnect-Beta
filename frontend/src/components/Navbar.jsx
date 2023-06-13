@@ -48,7 +48,7 @@ const Navbar = () => {
                 </div>
               )}
               {user ? (
-                <button onClick={logoutAndHideMenu}>Sign Out</button>
+                <button className="signOutLink" onClick={logoutAndHideMenu}>Sign Out</button>
               ) : (
                 <>
                   <div className="login-get-started-links">

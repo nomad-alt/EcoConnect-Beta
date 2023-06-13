@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 
 const EventCard = ({ event, onInterest, onUninterest, interested }) => {
   return (
-  <div className="event-card">
-    <img src={event.imageUrl} alt={event.title} />
-    <h2>{event.organization}</h2>
-    <h2>{event.title}</h2>
-    <p>{event.location}</p>
-    <p>{event.startDate}</p>
-    <button onClick={interested ? () => onUninterest(event._id) : () => onInterest(event._id)}>
-      {interested ? "Not Interested" : "Interested"}
-    </button>
-  </div>
-);
+    <div className="organization-card">
+      <div className='image-container'>
+        <img className='organization-image' src={event.imageUrl} alt={event.title} />
+        <h2 className='event-name'>{event.organization}</h2>
+        <p className='event-details'>{event.location}</p>
+        <p className='event-details'>{event.startDate}</p>
+        <p className='event-description'>{event.title}</p>
+        <div className='event-buttons'>
+          <button className='event-interest' onClick={interested ? () => onUninterest(event._id) : () => onInterest(event._id)}>
+            {interested ? "Not Interested" : "Interested"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 EventCard.propTypes = {
