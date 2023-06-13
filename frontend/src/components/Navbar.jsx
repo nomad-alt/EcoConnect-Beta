@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -35,6 +35,7 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faBars} onClick={toggleMenu} className='menuIcon' />
           {menuVisible && (
             <div className="slide-menu">
+              <FontAwesomeIcon icon={faTimes} onClick={hideMenu} className='closeIcon' />
               <div className='homeLink'><Link to="/" onClick={hideMenu}>Home</Link></div>
               {user && <Link to="/dashboard" onClick={hideMenu}>Profile</Link>}
               <Link to="/events" onClick={hideMenu}>Events</Link>
@@ -48,7 +49,7 @@ const Navbar = () => {
                 </div>
               )}
               {user ? (
-                <button onClick={logoutAndHideMenu}>Sign Out</button>
+                <button className="signOutLink" onClick={logoutAndHideMenu}>Sign Out</button>
               ) : (
                 <>
                   <div className="login-get-started-links">
