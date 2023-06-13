@@ -97,11 +97,11 @@ const OrganizationCard = ({
   };
 
 
- const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-const handleShare = () => {
-  setShowModal(true);
-};
+  const handleShare = () => {
+    setShowModal(true);
+  };
 
   const handleDonate = () => {
     window.open(donateLink, "_blank");
@@ -130,44 +130,43 @@ const handleShare = () => {
           </button>
         )}
         <button onClick={handleShare}>Share</button>
-
-        {showModal && (
-  <div className="modal">
-    <div className="modal-content">
-      <h2>Share this organization</h2>
-
-      <LinkedinShareButton
-        url={shareUrl} /* title={title} summary={description} */
-      >
-        Share on LinkedIn
-      </LinkedinShareButton>
-
-      <TwitterShareButton
-        url={shareUrl}
-        title={name}
-        hashtags={["chasAcademy", "EcoConnect"]}
-        className="organization-share"
-      >
-        Twitter
-      </TwitterShareButton>
-      
-      <FacebookShareButton
-        url={shareUrl}
-        quote={"Take care of environment"}
-        description={description}
-        hashtags={["chasAcademy", "EcoConnect"]}
-      >
-        Facebook
-      </FacebookShareButton>
-
-      <button onClick={() => setShowModal(false)}>X</button>
-    </div>
-  </div>
-)}
         <button onClick={handleDonate} className="organization-donate">
           Donate
         </button>
       </div>
+      {showModal && (
+        <div className="overlay">
+          <div className="modal-content">
+            <h4 className="share-organization">Share this organization</h4>
+
+            <LinkedinShareButton
+              url={shareUrl} /* title={title} summary={description} */
+            >
+              Share on LinkedIn
+            </LinkedinShareButton>
+
+            <TwitterShareButton
+              url={shareUrl}
+              title={name}
+              hashtags={["chasAcademy", "EcoConnect"]}
+              className="organization-share"
+            >
+              Twitter
+            </TwitterShareButton>
+
+            <FacebookShareButton
+              url={shareUrl}
+              quote={"Take care of environment"}
+              description={description}
+              hashtags={["chasAcademy", "EcoConnect"]}
+            >
+              Facebook
+            </FacebookShareButton>
+
+            <button onClick={() => setShowModal(false)}>X</button>
+          </div>
+        </div>
+      )}
       <ul className="additional-links">
         {additionalLinks?.map((link, index) => (
           <li key={index}>

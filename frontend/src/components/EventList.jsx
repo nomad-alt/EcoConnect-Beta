@@ -18,67 +18,70 @@ const EventList = ({ events }) => {
   }, [events]);
 
   const handleInterest = async (eventId) => {
-  console.log(`Interested in event with id: ${eventId}`);
-  try {
-    const response = await fetch(`/api/users/${user.id}/interestedEvents/${eventId}`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${user.token}`,
-      },
-    });
+    console.log(`Interested in event with id: ${eventId}`);
+    try {
+      const response = await fetch(`/api/users/${user.id}/interestedEvents/${eventId}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${user.token}`,
+        },
+      });
 
-    if (response.ok) {
-      setInterestedEvents(prev => [...prev, eventId]);
-    } else {
-      console.error('Failed to express interest in event');
+      if (response.ok) {
+        setInterestedEvents(prev => [...prev, eventId]);
+      } else {
+        console.error('Failed to express interest in event');
+      }
+    } catch (error) {
+      console.error('Failed to express interest in event', error);
     }
-  } catch (error) {
-    console.error('Failed to express interest in event', error);
-  }
-};
+  };
 
-const handleUninterest = async (eventId) => {
-  console.log(`Not interested in event with id: ${eventId}`);
-  try {
-    const response = await fetch(`/api/users/${user.id}/interestedEvents/${eventId}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${user.token}`,
-      },
-    });
+  const handleUninterest = async (eventId) => {
+    console.log(`Not interested in event with id: ${eventId}`);
+    try {
+      const response = await fetch(`/api/users/${user.id}/interestedEvents/${eventId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${user.token}`,
+        },
+      });
 
-    if (response.ok) {
-      setInterestedEvents(prev => prev.filter(id => id !== eventId));
-    } else {
-      console.error('Failed to express uninterest in event');
+      if (response.ok) {
+        setInterestedEvents(prev => prev.filter(id => id !== eventId));
+      } else {
+        console.error('Failed to express uninterest in event');
+      }
+    } catch (error) {
+      console.error('Failed to express uninterest in event', error);
     }
-  } catch (error) {
-    console.error('Failed to express uninterest in event', error);
-  }
-};
+  };
 
   const tabs = ['all', 'ocean', 'forest', 'desert', 'jungle'];
-  
+
   const filteredEvents = activeBiotope === 'all' ? events : events.filter(event => event.biotope === activeBiotope);
 
   return (
-    <div className="event-list">
-      <div className="tab-container">
+    <div className="organization-list">
+      <h1 className='organization-biotope'>Events</h1>
+      <div className="event-tabs">
         {tabs.map((tab) => (
-          <button key={tab} className={activeBiotope === tab ? "active" : ""} onClick={() => setActiveBiotope(tab)}>
+          <button id='biotope-tab' key={tab} className={activeBiotope === tab ? "active" : ""} onClick={() => setActiveBiotope(tab)}>
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </button>
         ))}
       </div>
-      {filteredEvents.map((event) => (
-        <EventCard
-          key={event._id}
-          event={event}
-          onInterest={() => handleInterest(event._id)}
-          onUninterest={() => handleUninterest(event._id)}
-          interested={interestedEvents.includes(event._id)}
-        />
-      ))}
+      <div className='organization-category'>
+        {filteredEvents.map((event) => (
+          <EventCard
+            key={event._id}
+            event={event}
+            onInterest={() => handleInterest(event._id)}
+            onUninterest={() => handleUninterest(event._id)}
+            interested={interestedEvents.includes(event._id)}
+          />
+        ))}
+      </div>
     </div>
   );
 };

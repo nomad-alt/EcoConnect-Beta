@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import DashboardCard from './DashboardCard';
-import EventCard from './EventCard'; 
+import EventCard from './EventCard';
 import Navbar from './Navbar';
+
 
 const UserDashboard = () => {
   const { user } = useAuthContext();
@@ -22,7 +23,7 @@ const UserDashboard = () => {
     // Fetch liked organizations and interested events from the API
     const fetchUserInterests = async () => {
       if (!user) return;
-      
+
       try {
         const orgResponse = await fetch(`/api/users/${user.id}/likedOrganizations`, {
           headers: {
@@ -62,16 +63,30 @@ const UserDashboard = () => {
   return (
     <div className="user-dashboard">
       <Navbar />
-      <h1>Profile</h1>
-      <div className="user-info">
-        <p>Email: {user?.email}</p>
+      <h1 className='profile-header'>Profile</h1>
+      <div className='user-info'>
+        <p className='user-details'>Your details:</p>
+        <p className='user-email'>Email: {user?.email}</p>
       </div>
-      <div className="tabs">
-        <button onClick={() => setActiveTab('organizations')}>Liked Organizations</button>
-        <button onClick={() => setActiveTab('events')}>My Events</button>
+      <div className="dashboard-tabs">
+        <button
+          id='liked-tab'
+          className={activeTab === 'organizations' ? 'button active' : 'button'}
+          onClick={() => setActiveTab('organizations')}
+        >
+          Liked Organizations
+        </button>
+        <button
+          id='myEvents-tab'
+          className={activeTab === 'events' ? 'button active' : 'button'}
+          onClick={() => setActiveTab('events')}
+        >
+          My Events
+        </button>
+
       </div>
       {activeTab === 'organizations' && (
-        <div className="user-organizations">
+        <div className="organization-category">
           {likedOrganizations.map((org) => (
             <DashboardCard
               key={org._id}
@@ -85,7 +100,7 @@ const UserDashboard = () => {
         </div>
       )}
       {activeTab === 'events' && (
-        <div className="user-events">
+        <div className="organization-category">
           {interestedEvents.map((event) => (
             <EventCard
               key={event._id}
