@@ -14,11 +14,11 @@ frontend-setup:
   extends: .base_template
   script:
     - cd frontend
-    - yarn install    
+    - yarn install
     - yarn add vite
   artifacts:
     paths:
-      - frontend/node_modules 
+      - frontend/node_modules
 
 frontend-build:
   stage: setup
@@ -34,7 +34,7 @@ frontend-build:
     exit_codes:
       - 1
   variables:
-    CI: "false"    
+    CI: "false"
   artifacts:
     paths:
       - frontend/dist
@@ -82,8 +82,3 @@ build-image:
     - docker tag $CI_REGISTRY_IMAGE:$VERSION $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:$VERSION
-
-<<<<<<< HEAD
-
-=======
->>>>>>> f3d63edeab9ef7ead4ba759dc0c8276a0ec0ef02
